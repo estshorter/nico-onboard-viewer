@@ -15,11 +15,14 @@ ax.axis('off')
 # Background clean dark rectangle
 ax.add_patch(patches.Rectangle((0, 0), 1, 1, transform=ax.transAxes, color='#0f172a'))
 
-# Main Title (Large, Bold, Centered, Perfectly Balanced)
-ax.text(0.5, 0.50, 'ニコニコ車載動画\n初投稿年別＆活動状況データベース', color='#ffffff', fontsize=42, fontweight='bold',
-        ha='center', va='center', linespacing=1.4, transform=ax.transAxes)
+# Subtle left accent bar
+ax.add_patch(patches.Rectangle((0.10, 0.32), 0.008, 0.36, transform=ax.transAxes, color='#38bdf8'))
+
+# Main Title (Left-aligned, Modern & Clean typography)
+ax.text(0.13, 0.50, 'ニコニコ車載動画\n初投稿年別＆活動状況データベース', color='#ffffff', fontsize=40, fontweight='bold',
+        ha='left', va='center', linespacing=1.35, transform=ax.transAxes)
 
 output_path = r"C:\Users\estshorter\src\nico-onboard-viewer\ogp.png"
 plt.savefig(output_path, facecolor=fig.get_facecolor(), dpi=100)
 plt.close()
-print(f"Successfully generated clean title-only OGP image: {output_path}")
+print(f"Successfully generated smart left-aligned OGP image: {output_path}")
