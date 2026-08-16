@@ -1,5 +1,5 @@
 /**
- * Nico Onboard Active Users Viewer Logic (Dynamic Year Activity Summary)
+ * Nico Onboard Active Users Viewer Logic (Bug-free & Refined Version)
  */
 
 let allData = [];
@@ -11,8 +11,8 @@ let currentStatusFilter = 'active';
 let currentSearchQuery = '';
 let currentSort = 'latestTime_desc';
 
-// Default Fallback Avatar SVG (Clean lightweight inline SVG data URI)
-const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+// Default Fallback Avatar SVG in Base64 (No single-quote collision in inline onerror)
+const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzk0YTNiOCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==";
 
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
@@ -57,7 +57,7 @@ async function initApp() {
   });
   availableYears = Array.from(yearSet).sort((a, b) => b - a);
 
-  // If 2026 is not present in data, fallback to the latest year
+  // If 2026 is not present in data, fallback to the latest available year
   if (!availableYears.includes(2026) && availableYears.length > 0) {
     currentFilterYear = availableYears[0];
   }
@@ -105,7 +105,9 @@ function getUserIconUrl(userId) {
 // ==========================================================================
 function updateYearSummaryBanner() {
   let targetData = allData;
-  let titleText = '全期間 (2007年〜2026年) の活動状況';
+  const minYear = availableYears.length > 0 ? availableYears[availableYears.length - 1] : 2007;
+  const maxYear = availableYears.length > 0 ? availableYears[0] : 2026;
+  let titleText = `全期間 (${minYear}年〜${maxYear}年) の活動状況`;
 
   if (currentFilterYear !== 'all') {
     targetData = allData.filter(d => d.debutYear === currentFilterYear);
@@ -133,7 +135,8 @@ function setupEventListeners() {
   // Search Input (Incremental Real-time Filtering)
   searchInput.addEventListener('input', (e) => {
     currentSearchQuery = e.target.value.trim();
-    searchClearBtn.style.display = currentSearchQuery ? 'block' : 'none';
+    // Show clear button whenever there is any input in the box
+    searchClearBtn.style.display = e.target.value.length > 0 ? 'block' : 'none';
     applyFiltersAndRender();
   });
 
@@ -173,7 +176,9 @@ function setupEventListeners() {
     searchClearBtn.style.display = 'none';
     currentFilterYear = 'all';
     currentStatusFilter = 'all';
+    currentSort = 'latestTime_desc';
     yearSelectDropdown.value = 'all';
+    sortSelect.value = 'latestTime_desc';
     updateStatusSegmentUI();
     applyFiltersAndRender();
   });
@@ -195,10 +200,10 @@ function updateStatusSegmentUI() {
   });
 }
 
-// Normalize strings for resilient searching (half-width, lower-case, etc.)
+// Normalize strings for resilient searching (half-width, lower-case, unescaped)
 function normalizeText(text) {
   if (!text) return '';
-  return text
+  return unescapeHtml(String(text))
     .normalize('NFKC')
     .toLowerCase();
 }
@@ -210,32 +215,36 @@ function applyFiltersAndRender() {
   // 1. Update Summary Banner for selected year
   updateYearSummaryBanner();
 
-  // 2. Year Filtering
-  let filtered = allData;
+  // 2. Clone array (Immutable to prevent mutating master allData)
+  let filtered = [...allData];
+
+  // 3. Year Filtering
   if (currentFilterYear !== 'all') {
     filtered = filtered.filter(item => item.debutYear === currentFilterYear);
   }
 
-  // 3. Active Status Filtering
+  // 4. Active Status Filtering
   if (currentStatusFilter === 'active') {
     filtered = filtered.filter(item => item.isActiveRecent1Year === true);
   } else if (currentStatusFilter === 'inactive') {
     filtered = filtered.filter(item => item.isActiveRecent1Year === false);
   }
 
-  // 4. Incremental Search Query (AND Search across words)
+  // 5. Incremental Search Query (AND Search across words, null-safe)
   if (currentSearchQuery) {
     const keywords = normalizeText(currentSearchQuery).split(/\s+/).filter(Boolean);
     
     filtered = filtered.filter(item => {
       const searchTarget = normalizeText(
-        `${item.userName} ${item.userId} ${item.firstTitle} ${item.firstContentId} ${item.latestTitle} ${item.latestContentId}`
+        [item.userName, item.userId, item.firstTitle, item.firstContentId, item.latestTitle, item.latestContentId]
+          .filter(Boolean)
+          .join(' ')
       );
       return keywords.every(kw => searchTarget.includes(kw));
     });
   }
 
-  // 5. Sorting
+  // 6. Sorting
   filtered.sort((a, b) => {
     switch (currentSort) {
       case 'latestTime_desc':
@@ -253,11 +262,11 @@ function applyFiltersAndRender() {
     }
   });
 
-  // 6. Update UI Counts & Badges
+  // 7. Update UI Counts & Badges
   currentCountEl.textContent = `${filtered.length.toLocaleString()}名`;
   renderActiveFilterChips();
 
-  // 7. Render Table
+  // 8. Render Table
   renderTable(filtered);
 }
 
@@ -327,14 +336,15 @@ function renderTable(data) {
 
     // User Column (Avatar + Links)
     const tdUser = document.createElement('td');
-    const userUrl = `https://www.nicovideo.jp/user/${encodeURIComponent(item.userId)}`;
+    const userUrl = `https://www.nicovideo.jp/user/${encodeURIComponent(item.userId || '')}`;
     const iconUrl = getUserIconUrl(item.userId);
+    const displayName = item.userName || `ユーザー(${item.userId})`;
 
     tdUser.innerHTML = `
       <div class="user-cell">
         <img 
           src="${iconUrl}" 
-          alt="${escapeHtml(item.userName)}" 
+          alt="${escapeHtml(displayName)}" 
           class="user-avatar" 
           loading="lazy" 
           referrerpolicy="no-referrer"
@@ -342,44 +352,68 @@ function renderTable(data) {
         >
         <div class="user-info-text">
           <a href="${userUrl}" target="_blank" rel="noopener noreferrer" class="user-name-link" title="ニコニコマイページを開く">
-            ${escapeHtml(item.userName)}
+            ${escapeHtml(displayName)}
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
           </a>
-          <span class="user-id-sub">ID: ${escapeHtml(item.userId)}</span>
+          <span class="user-id-sub">ID: ${escapeHtml(item.userId || '')}</span>
         </div>
       </div>
     `;
 
     // First Video
     const tdFirst = document.createElement('td');
-    const firstUrl = item.firstContentId ? `https://www.nicovideo.jp/watch/${encodeURIComponent(item.firstContentId)}` : '#';
-    tdFirst.innerHTML = `
-      <div class="video-cell">
-        <a href="${firstUrl}" target="_blank" rel="noopener noreferrer" class="video-title-link" title="${escapeHtml(item.firstTitle)}">
-          ${escapeHtml(item.firstTitle || '（タイトル不明）')}
-        </a>
-        <div class="video-meta">
-          ${item.firstContentId ? `<span class="video-id-badge">${escapeHtml(item.firstContentId)}</span>` : ''}
-          <span class="video-date">${formatDate(item.firstPostTime)}</span>
+    const firstTitleClean = unescapeHtml(item.firstTitle || '（タイトル不明）');
+    if (item.firstContentId) {
+      const firstUrl = `https://www.nicovideo.jp/watch/${encodeURIComponent(item.firstContentId)}`;
+      tdFirst.innerHTML = `
+        <div class="video-cell">
+          <a href="${firstUrl}" target="_blank" rel="noopener noreferrer" class="video-title-link" title="${escapeHtml(firstTitleClean)}">
+            ${escapeHtml(firstTitleClean)}
+          </a>
+          <div class="video-meta">
+            <span class="video-id-badge">${escapeHtml(item.firstContentId)}</span>
+            <span class="video-date">${formatDate(item.firstPostTime)}</span>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    } else {
+      tdFirst.innerHTML = `
+        <div class="video-cell">
+          <span class="video-title-text">${escapeHtml(firstTitleClean)}</span>
+          <div class="video-meta">
+            <span class="video-date">${formatDate(item.firstPostTime)}</span>
+          </div>
+        </div>
+      `;
+    }
 
     // Latest Video
     const tdLatest = document.createElement('td');
     if (item.latestContentId || item.latestTitle) {
-      const latestUrl = item.latestContentId ? `https://www.nicovideo.jp/watch/${encodeURIComponent(item.latestContentId)}` : '#';
-      tdLatest.innerHTML = `
-        <div class="video-cell">
-          <a href="${latestUrl}" target="_blank" rel="noopener noreferrer" class="video-title-link" title="${escapeHtml(item.latestTitle)}">
-            ${escapeHtml(item.latestTitle || '（タイトル不明）')}
-          </a>
-          <div class="video-meta">
-            ${item.latestContentId ? `<span class="video-id-badge">${escapeHtml(item.latestContentId)}</span>` : ''}
-            <span class="video-date">${formatDate(item.latestPostTime)}</span>
+      const latestTitleClean = unescapeHtml(item.latestTitle || '（タイトル不明）');
+      if (item.latestContentId) {
+        const latestUrl = `https://www.nicovideo.jp/watch/${encodeURIComponent(item.latestContentId)}`;
+        tdLatest.innerHTML = `
+          <div class="video-cell">
+            <a href="${latestUrl}" target="_blank" rel="noopener noreferrer" class="video-title-link" title="${escapeHtml(latestTitleClean)}">
+              ${escapeHtml(latestTitleClean)}
+            </a>
+            <div class="video-meta">
+              <span class="video-id-badge">${escapeHtml(item.latestContentId)}</span>
+              <span class="video-date">${formatDate(item.latestPostTime)}</span>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        tdLatest.innerHTML = `
+          <div class="video-cell">
+            <span class="video-title-text">${escapeHtml(latestTitleClean)}</span>
+            <div class="video-meta">
+              <span class="video-date">${formatDate(item.latestPostTime)}</span>
+            </div>
+          </div>
+        `;
+      }
     } else {
       tdLatest.innerHTML = `<span class="no-latest-video">初投稿のみ記録</span>`;
     }
@@ -396,6 +430,12 @@ function renderTable(data) {
 }
 
 // Helpers
+function unescapeHtml(str) {
+  if (!str) return '';
+  const doc = new DOMParser().parseFromString(String(str), 'text/html');
+  return doc.body.textContent || '';
+}
+
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)
