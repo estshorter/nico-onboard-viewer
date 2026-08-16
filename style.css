@@ -812,6 +812,17 @@ body {
   border-radius: 4px;
 }
 
+.footer-content a {
+  color: var(--accent-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+
+.footer-content a:hover {
+  color: var(--accent-primary-hover);
+}
+
 /* ==========================================================================
    Responsive Breakpoints
    ========================================================================== */
