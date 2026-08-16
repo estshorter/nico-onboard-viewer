@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ニコニコ車載動画 初投稿年別＆生存状況データベース</title>
-  <meta name="description" content="ニコニコ動画の車載動画ジャンルにおける初投稿年別（2016年、2021年、2023年、2025年）の全投稿者および直近1年間生存（アクティブ）判定データベース。">
+  <title>ニコニコ車載動画 初投稿年別＆活動状況データベース</title>
+  <meta name="description" content="ニコニコ動画の車載動画ジャンルにおける初投稿年別（2016年、2021年、2023年、2025年）の全投稿者および直近1年間の活動状況（アクティブ判定）データベース。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,9 +16,9 @@
     <header class="app-header">
       <div class="header-content">
         <div class="header-badge">ニコニコ車載動画 分析アーカイブ</div>
-        <h1 class="header-title">初投稿年別 車載主データベース ＆ 生存状況分析</h1>
+        <h1 class="header-title">初投稿年別 車載主データベース ＆ 活動状況アーカイブ</h1>
         <p class="header-desc">
-          指定年に車載動画ジャンルで初投稿した動画投稿者のデータベースです。初投稿・最新投稿動画の確認や、直近1年間（2025〜2026年）の生存（アクティブ）判定によるフィルタリングが可能です。
+          指定年に車載動画ジャンルで初投稿した動画投稿者のデータベースです。初投稿・最新投稿動画の確認や、直近1年間（2025〜2026年）の活動状況（アクティブ判定）によるフィルタリングが可能です。
         </p>
       </div>
     </header>
@@ -30,27 +30,27 @@
         <div class="stat-card total-card" data-filter-year="all">
           <div class="stat-label">総登録投稿者数</div>
           <div class="stat-value" id="statTotalCount">--</div>
-          <div class="stat-sub">生存: <span id="statTotalActive">--</span> (<span id="statTotalRate">--%</span>)</div>
+          <div class="stat-sub">活動中: <span id="statTotalActive">--</span> (<span id="statTotalRate">--%</span>)</div>
         </div>
         <div class="stat-card" data-filter-year="2025">
           <div class="stat-label">2025年デビュー</div>
           <div class="stat-value" id="stat2025Count">--</div>
-          <div class="stat-sub">生存: <span id="stat2025Active">--</span> (<span id="stat2025Rate">--%</span>)</div>
+          <div class="stat-sub">活動中: <span id="stat2025Active">--</span> (<span id="stat2025Rate">--%</span>)</div>
         </div>
         <div class="stat-card" data-filter-year="2023">
           <div class="stat-label">2023年デビュー</div>
           <div class="stat-value" id="stat2023Count">--</div>
-          <div class="stat-sub">生存: <span id="stat2023Active">--</span> (<span id="stat2023Rate">--%</span>)</div>
+          <div class="stat-sub">活動中: <span id="stat2023Active">--</span> (<span id="stat2023Rate">--%</span>)</div>
         </div>
         <div class="stat-card" data-filter-year="2021">
           <div class="stat-label">2021年デビュー</div>
           <div class="stat-value" id="stat2021Count">--</div>
-          <div class="stat-sub">生存: <span id="stat2021Active">--</span> (<span id="stat2021Rate">--%</span>)</div>
+          <div class="stat-sub">活動中: <span id="stat2021Active">--</span> (<span id="stat2021Rate">--%</span>)</div>
         </div>
         <div class="stat-card" data-filter-year="2016">
           <div class="stat-label">2016年デビュー</div>
           <div class="stat-value" id="stat2016Count">--</div>
-          <div class="stat-sub">生存: <span id="stat2016Active">--</span> (<span id="stat2016Rate">--%</span>)</div>
+          <div class="stat-sub">活動中: <span id="stat2016Active">--</span> (<span id="stat2016Rate">--%</span>)</div>
         </div>
       </section>
 
@@ -111,16 +111,16 @@
 
           <!-- Active Status Filter -->
           <div class="filter-group">
-            <div class="filter-group-label">生存状況 (直近1年):</div>
+            <div class="filter-group-label">活動状況 (直近1年):</div>
             <div class="status-segment-control" id="statusFilterControl">
               <button class="segment-btn active" data-status="all" id="btnStatusAll">
                 すべて
               </button>
               <button class="segment-btn" data-status="active" id="btnStatusActive">
-                <span class="status-indicator-dot dot-active"></span> 生存（アクティブ）
+                <span class="status-indicator-dot dot-active"></span> 活動中
               </button>
               <button class="segment-btn" data-status="inactive" id="btnStatusInactive">
-                <span class="status-indicator-dot dot-inactive"></span> 非アクティブ
+                <span class="status-indicator-dot dot-inactive"></span> 休止中
               </button>
             </div>
           </div>
@@ -140,7 +140,7 @@
         <table class="data-table" id="dataTable">
           <thead>
             <tr>
-              <th class="th-year">年 / 状態</th>
+              <th class="th-year">年 / 状況</th>
               <th class="th-user">投稿者（ユーザー）</th>
               <th class="th-first-video">初投稿動画</th>
               <th class="th-latest-video">最新投稿動画</th>
@@ -153,7 +153,7 @@
         <div id="noResults" class="no-results" style="display: none;">
           <div class="no-results-icon">🔍</div>
           <h3>該当する投稿者が見つかりませんでした</h3>
-          <p>検索条件や年フィルター、生存状況フィルターを変更してお試しください。</p>
+          <p>検索条件や年フィルター、活動状況フィルターを変更してお試しください。</p>
           <button class="reset-filter-btn" id="resetFilterBtn">条件をリセット</button>
         </div>
       </section>
@@ -163,7 +163,7 @@
     <footer class="app-footer">
       <div class="footer-content">
         <p>データ出典: ニコニコ動画車載動画ジャンル集計データ（<code>nico-analyzer</code>）</p>
-        <p>※ 「生存」は直近1年以内に動画投稿実績があるユーザーを示します。各リンクをクリックするとニコニコ動画およびユーザーページが別タブで開きます。</p>
+        <p>※ 「活動中」は直近1年以内に動画投稿実績が確認できたユーザーを示します。各リンクをクリックするとニコニコ動画およびユーザーマイページが別タブで開きます。</p>
       </div>
     </footer>
   </div>

@@ -310,7 +310,7 @@ function renderActiveFilterChips() {
   if (currentStatusFilter !== 'all') {
     const chip = document.createElement('span');
     chip.className = 'filter-tag-chip';
-    chip.innerHTML = `状況: ${currentStatusFilter === 'active' ? '生存（アクティブ）' : '非アクティブ'}`;
+    chip.innerHTML = `状況: ${currentStatusFilter === 'active' ? '活動中' : '休止中'}`;
     activeFilterTags.appendChild(chip);
   }
 
@@ -342,8 +342,8 @@ function renderTable(data) {
     // Year & Status Column
     const tdYear = document.createElement('td');
     const statusPill = item.isActiveRecent1Year
-      ? `<span class="status-pill status-active"><span class="status-indicator-dot dot-active"></span> 生存</span>`
-      : `<span class="status-pill status-inactive"><span class="status-indicator-dot dot-inactive"></span> 停止</span>`;
+      ? `<span class="status-pill status-active"><span class="status-indicator-dot dot-active"></span> 活動中</span>`
+      : `<span class="status-pill status-inactive"><span class="status-indicator-dot dot-inactive"></span> 休止中</span>`;
     
     tdYear.innerHTML = `
       <div class="year-status-cell">
