@@ -4,14 +4,16 @@
 
 let allData = [];
 let currentFilterYear = 'all'; // 'all' | 2025 | 2023 | 2021 | 2016
+let currentStatusFilter = 'all'; // 'all' | 'active' | 'inactive'
 let currentSearchQuery = '';
-let currentSort = 'firstTime_desc';
+let currentSort = 'latestTime_desc';
 
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
 const searchClearBtn = document.getElementById('searchClearBtn');
 const sortSelect = document.getElementById('sortSelect');
 const yearFilterTabs = document.getElementById('yearFilterTabs');
+const statusFilterControl = document.getElementById('statusFilterControl');
 const tableBody = document.getElementById('tableBody');
 const noResults = document.getElementById('noResults');
 const currentCountEl = document.getElementById('currentCount');
@@ -21,10 +23,24 @@ const activeFilterTags = document.getElementById('activeFilterTags');
 
 // Stat Cards
 const statTotalCount = document.getElementById('statTotalCount');
+const statTotalActive = document.getElementById('statTotalActive');
+const statTotalRate = document.getElementById('statTotalRate');
+
 const stat2025Count = document.getElementById('stat2025Count');
+const stat2025Active = document.getElementById('stat2025Active');
+const stat2025Rate = document.getElementById('stat2025Rate');
+
 const stat2023Count = document.getElementById('stat2023Count');
+const stat2023Active = document.getElementById('stat2023Active');
+const stat2023Rate = document.getElementById('stat2023Rate');
+
 const stat2021Count = document.getElementById('stat2021Count');
+const stat2021Active = document.getElementById('stat2021Active');
+const stat2021Rate = document.getElementById('stat2021Rate');
+
 const stat2016Count = document.getElementById('stat2016Count');
+const stat2016Active = document.getElementById('stat2016Active');
+const stat2016Rate = document.getElementById('stat2016Rate');
 
 // Badges
 const badgeAll = document.getElementById('badgeAll');
@@ -64,23 +80,48 @@ async function initApp() {
 // ==========================================================================
 function updateGlobalStats() {
   const total = allData.length;
-  const count2025 = allData.filter(d => d.debutYear === 2025).length;
-  const count2023 = allData.filter(d => d.debutYear === 2023).length;
-  const count2021 = allData.filter(d => d.debutYear === 2021).length;
-  const count2016 = allData.filter(d => d.debutYear === 2016).length;
+  const totalActive = allData.filter(d => d.isActiveRecent1Year).length;
 
+  const data2025 = allData.filter(d => d.debutYear === 2025);
+  const active2025 = data2025.filter(d => d.isActiveRecent1Year).length;
+
+  const data2023 = allData.filter(d => d.debutYear === 2023);
+  const active2023 = data2023.filter(d => d.isActiveRecent1Year).length;
+
+  const data2021 = allData.filter(d => d.debutYear === 2021);
+  const active2021 = data2021.filter(d => d.isActiveRecent1Year).length;
+
+  const data2016 = allData.filter(d => d.debutYear === 2016);
+  const active2016 = data2016.filter(d => d.isActiveRecent1Year).length;
+
+  // Render stats
   totalDataCountEl.textContent = total.toLocaleString();
   statTotalCount.textContent = total.toLocaleString();
-  stat2025Count.textContent = count2025.toLocaleString();
-  stat2023Count.textContent = count2023.toLocaleString();
-  stat2021Count.textContent = count2021.toLocaleString();
-  stat2016Count.textContent = count2016.toLocaleString();
+  statTotalActive.textContent = `${totalActive}名`;
+  statTotalRate.textContent = `${total ? (totalActive / total * 100).toFixed(1) : 0}%`;
 
+  stat2025Count.textContent = data2025.length.toLocaleString();
+  stat2025Active.textContent = `${active2025}名`;
+  stat2025Rate.textContent = `${data2025.length ? (active2025 / data2025.length * 100).toFixed(1) : 0}%`;
+
+  stat2023Count.textContent = data2023.length.toLocaleString();
+  stat2023Active.textContent = `${active2023}名`;
+  stat2023Rate.textContent = `${data2023.length ? (active2023 / data2023.length * 100).toFixed(1) : 0}%`;
+
+  stat2021Count.textContent = data2021.length.toLocaleString();
+  stat2021Active.textContent = `${active2021}名`;
+  stat2021Rate.textContent = `${data2021.length ? (active2021 / data2021.length * 100).toFixed(1) : 0}%`;
+
+  stat2016Count.textContent = data2016.length.toLocaleString();
+  stat2016Active.textContent = `${active2016}名`;
+  stat2016Rate.textContent = `${data2016.length ? (active2016 / data2016.length * 100).toFixed(1) : 0}%`;
+
+  // Badges on tabs
   badgeAll.textContent = total;
-  badge2025.textContent = count2025;
-  badge2023.textContent = count2023;
-  badge2021.textContent = count2021;
-  badge2016.textContent = count2016;
+  badge2025.textContent = data2025.length;
+  badge2023.textContent = data2023.length;
+  badge2021.textContent = data2021.length;
+  badge2016.textContent = data2016.length;
 }
 
 // ==========================================================================
@@ -109,7 +150,7 @@ function setupEventListeners() {
     applyFiltersAndRender();
   });
 
-  // Filter Tabs
+  // Year Filter Tabs
   yearFilterTabs.addEventListener('click', (e) => {
     const tab = e.target.closest('.filter-tab');
     if (!tab) return;
@@ -117,12 +158,21 @@ function setupEventListeners() {
     setYearFilter(year === 'all' ? 'all' : parseInt(year, 10));
   });
 
+  // Active Status Segment Control
+  statusFilterControl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.segment-btn');
+    if (!btn) return;
+    setStatusFilter(btn.dataset.status);
+  });
+
   // Stat Card Click to Filter
   document.getElementById('statsGrid').addEventListener('click', (e) => {
     const card = e.target.closest('.stat-card');
-    if (!card || card.classList.contains('total-card')) return;
+    if (!card) return;
     const year = card.dataset.filterYear;
-    if (year) {
+    if (year === 'all') {
+      setYearFilter('all');
+    } else if (year) {
       setYearFilter(parseInt(year, 10));
     }
   });
@@ -132,6 +182,8 @@ function setupEventListeners() {
     searchInput.value = '';
     currentSearchQuery = '';
     searchClearBtn.style.display = 'none';
+    currentStatusFilter = 'all';
+    updateStatusSegmentUI();
     setYearFilter('all');
   });
 }
@@ -152,6 +204,22 @@ function setYearFilter(year) {
   applyFiltersAndRender();
 }
 
+function setStatusFilter(status) {
+  currentStatusFilter = status;
+  updateStatusSegmentUI();
+  applyFiltersAndRender();
+}
+
+function updateStatusSegmentUI() {
+  document.querySelectorAll('.segment-btn').forEach(btn => {
+    if (btn.dataset.status === currentStatusFilter) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
 // Normalize strings for resilient searching (half-width, lower-case, etc.)
 function normalizeText(text) {
   if (!text) return '';
@@ -170,7 +238,14 @@ function applyFiltersAndRender() {
     filtered = filtered.filter(item => item.debutYear === currentFilterYear);
   }
 
-  // 2. Incremental Search Query (AND Search across words)
+  // 2. Active Status Filtering
+  if (currentStatusFilter === 'active') {
+    filtered = filtered.filter(item => item.isActiveRecent1Year === true);
+  } else if (currentStatusFilter === 'inactive') {
+    filtered = filtered.filter(item => item.isActiveRecent1Year === false);
+  }
+
+  // 3. Incremental Search Query (AND Search across words)
   if (currentSearchQuery) {
     const keywords = normalizeText(currentSearchQuery).split(/\s+/).filter(Boolean);
     
@@ -182,17 +257,17 @@ function applyFiltersAndRender() {
     });
   }
 
-  // 3. Sorting
+  // 4. Sorting
   filtered.sort((a, b) => {
     switch (currentSort) {
+      case 'latestTime_desc':
+        return (b.latestPostTime || b.firstPostTime || '').localeCompare(a.latestPostTime || a.firstPostTime || '');
+      case 'latestTime_asc':
+        return (a.latestPostTime || a.firstPostTime || '').localeCompare(b.latestPostTime || b.firstPostTime || '');
       case 'firstTime_desc':
         return (b.firstPostTime || '').localeCompare(a.firstPostTime || '');
       case 'firstTime_asc':
         return (a.firstPostTime || '').localeCompare(b.firstPostTime || '');
-      case 'latestTime_desc':
-        return (b.latestPostTime || '').localeCompare(a.latestPostTime || '');
-      case 'latestTime_asc':
-        return (a.latestPostTime || '').localeCompare(b.latestPostTime || '');
       case 'name_asc':
         return (a.userName || '').localeCompare(b.userName || '', 'ja');
       default:
@@ -200,11 +275,11 @@ function applyFiltersAndRender() {
     }
   });
 
-  // 4. Update UI Counts & Badges
+  // 5. Update UI Counts & Badges
   currentCountEl.textContent = filtered.length.toLocaleString();
   renderActiveFilterChips();
 
-  // 5. Render Table
+  // 6. Render Table
   renderTable(filtered);
 }
 
@@ -215,6 +290,13 @@ function renderActiveFilterChips() {
     const chip = document.createElement('span');
     chip.className = 'filter-tag-chip';
     chip.innerHTML = `初投稿年: ${currentFilterYear}年`;
+    activeFilterTags.appendChild(chip);
+  }
+
+  if (currentStatusFilter !== 'all') {
+    const chip = document.createElement('span');
+    chip.className = 'filter-tag-chip';
+    chip.innerHTML = `状況: ${currentStatusFilter === 'active' ? '生存（アクティブ）' : '非アクティブ'}`;
     activeFilterTags.appendChild(chip);
   }
 
@@ -243,9 +325,18 @@ function renderTable(data) {
   data.forEach(item => {
     const tr = document.createElement('tr');
 
-    // Debut Year
+    // Year & Status Column
     const tdYear = document.createElement('td');
-    tdYear.innerHTML = `<span class="year-badge y-${item.debutYear}">${item.debutYear}年</span>`;
+    const statusPill = item.isActiveRecent1Year
+      ? `<span class="status-pill status-active"><span class="status-indicator-dot dot-active"></span> 生存</span>`
+      : `<span class="status-pill status-inactive"><span class="status-indicator-dot dot-inactive"></span> 停止</span>`;
+    
+    tdYear.innerHTML = `
+      <div class="year-status-cell">
+        <span class="year-badge y-${item.debutYear}">${item.debutYear}年</span>
+        ${statusPill}
+      </div>
+    `;
 
     // User Info
     const tdUser = document.createElement('td');
