@@ -5,6 +5,11 @@
 let allData = [];
 let availableYears = [];
 
+// 強制非表示（除外）対象のユーザーID（オプトアウト・非表示リクエスト対応）
+const HIDDEN_USER_IDS = new Set([
+  280096, // 非表示リクエスト
+]);
+
 // Default initial state: 2026 Debut + Active only
 let currentFilterYear = 2026; 
 let currentStatusFilter = 'active'; 
@@ -51,7 +56,10 @@ async function initApp() {
     }
   }
 
-  // 2. Extract Available Years (sorted descending)
+  // 2. Filter out hidden/excluded users
+  allData = allData.filter(d => !HIDDEN_USER_IDS.has(Number(d.userId)));
+
+  // 3. Extract Available Years (sorted descending)
   const yearSet = new Set();
   allData.forEach(d => {
     if (d.debutYear) yearSet.add(d.debutYear);
