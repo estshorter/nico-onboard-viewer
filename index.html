@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ニコニコ車載動画 デビュー年別アクティブ投稿者一覧</title>
+  <meta name="description" content="ニコニコ動画の車載動画ジャンルにおけるデビュー年別（2016年、2021年、2023年、2025年）の直近1年間アクティブ投稿者データベース。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-badge">ニコニコ車載動画 分析アーカイブ</div>
+        <h1 class="header-title">初投稿年別 アクティブ車載主データベース</h1>
+        <p class="header-desc">
+          指定年に車載動画ジャンルで初投稿を行い、直近1年間（2025〜2026年）にも動画投稿があるアクティブな投稿者の初投稿＆最新投稿一覧です。
+        </p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Stats Overview -->
+      <section class="stats-grid" id="statsGrid">
+        <div class="stat-card total-card">
+          <div class="stat-label">総アクティブ投稿者</div>
+          <div class="stat-value" id="statTotalCount">--</div>
+          <div class="stat-sub">直近1年間生存確認済</div>
+        </div>
+        <div class="stat-card" data-filter-year="2025">
+          <div class="stat-label">2025年デビュー</div>
+          <div class="stat-value" id="stat2025Count">--</div>
+          <div class="stat-sub">1年目ルーキー</div>
+        </div>
+        <div class="stat-card" data-filter-year="2023">
+          <div class="stat-label">2023年デビュー</div>
+          <div class="stat-value" id="stat2023Count">--</div>
+          <div class="stat-sub">3年目継続</div>
+        </div>
+        <div class="stat-card" data-filter-year="2021">
+          <div class="stat-label">2021年デビュー</div>
+          <div class="stat-value" id="stat2021Count">--</div>
+          <div class="stat-sub">5年目ベテラン</div>
+        </div>
+        <div class="stat-card" data-filter-year="2016">
+          <div class="stat-label">2016年デビュー</div>
+          <div class="stat-value" id="stat2016Count">--</div>
+          <div class="stat-sub">10年選手レジェンド</div>
+        </div>
+      </section>
+
+      <!-- Control Bar: Search & Year Filter -->
+      <section class="control-panel">
+        <div class="search-row">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="投稿者名、動画タイトル、sm番号、ユーザーIDでインクリメンタル検索..." 
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button id="searchClearBtn" class="search-clear-btn" title="検索ワードをクリア" aria-label="検索ワードをクリア">&times;</button>
+          </div>
+          
+          <div class="sort-wrapper">
+            <label for="sortSelect" class="sort-label">並び順:</label>
+            <select id="sortSelect" class="sort-select">
+              <option value="firstTime_desc">初投稿日時（新しい順）</option>
+              <option value="firstTime_asc">初投稿日時（古い順）</option>
+              <option value="latestTime_desc">最新投稿日時（新しい順）</option>
+              <option value="latestTime_asc">最新投稿日時（古い順）</option>
+              <option value="name_asc">投稿者名（昇順）</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Year Filter Tabs -->
+        <div class="filter-tabs-wrapper">
+          <div class="filter-label">初投稿年:</div>
+          <div class="filter-tabs" id="yearFilterTabs" role="tablist">
+            <button class="filter-tab active" data-year="all" id="tabYearAll">
+              すべて <span class="badge" id="badgeAll">0</span>
+            </button>
+            <button class="filter-tab" data-year="2025" id="tabYear2025">
+              2025年 <span class="badge" id="badge2025">0</span>
+            </button>
+            <button class="filter-tab" data-year="2023" id="tabYear2023">
+              2023年 <span class="badge" id="badge2023">0</span>
+            </button>
+            <button class="filter-tab" data-year="2021" id="tabYear2021">
+              2021年 <span class="badge" id="badge2021">0</span>
+            </button>
+            <button class="filter-tab" data-year="2016" id="tabYear2016">
+              2016年 <span class="badge" id="badge2016">0</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Status Info & Results Count -->
+      <section class="results-info-bar">
+        <div class="results-count" id="resultsCount">
+          表示中: <strong id="currentCount">0</strong> 件 / 全 <span id="totalDataCount">0</span> 件
+        </div>
+        <div class="active-filter-tags" id="activeFilterTags"></div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="table-container">
+        <table class="data-table" id="dataTable">
+          <thead>
+            <tr>
+              <th class="th-year">デビュー年</th>
+              <th class="th-user">投稿者（ユーザー）</th>
+              <th class="th-first-video">初投稿動画</th>
+              <th class="th-latest-video">最新投稿動画（直近1年）</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+        <div id="noResults" class="no-results" style="display: none;">
+          <div class="no-results-icon">🔍</div>
+          <h3>該当する投稿者が見つかりませんでした</h3>
+          <p>検索条件や年フィルターを変更してお試しください。</p>
+          <button class="reset-filter-btn" id="resetFilterBtn">条件をリセット</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>データ出典: ニコニコ動画車載動画ジャンル集計データ（<code>nico-analyzer</code>）</p>
+        <p>※ リンクをクリックするとニコニコ動画およびユーザーマイページが別タブで開きます。</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Load Data (Fallback order: data.js -> data.json fetch) -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
