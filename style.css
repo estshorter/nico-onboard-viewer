@@ -88,7 +88,7 @@ body {
 }
 
 .app-container {
-  max-width: 1320px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 4rem;
   display: flex;
@@ -442,7 +442,7 @@ body {
 
 /* ==========================================================================
    Results Info Bar
-   ========================================================================== */
+   ========================================================================= */
 .results-info-bar {
   display: flex;
   align-items: center;
@@ -510,7 +510,7 @@ body {
 }
 
 .data-table td {
-  padding: 1.1rem 1.25rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--border-subtle);
   vertical-align: top;
 }
@@ -528,10 +528,10 @@ body {
 }
 
 /* Column Specific Styles */
-.th-year { width: 130px; }
-.th-user { width: 220px; }
-.th-first-video { width: 42%; }
-.th-latest-video { width: 42%; }
+.th-year { width: 110px; }
+.th-user { width: 270px; }
+.th-first-video { width: 40%; }
+.th-latest-video { width: 40%; }
 
 /* Year & Status Cell */
 .year-status-cell {
@@ -602,11 +602,30 @@ body {
   border-color: var(--status-inactive-border);
 }
 
-/* User Column */
+/* User Column (Avatar + Info) */
 .user-cell {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface-subtle);
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.user-info-text {
+  display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
+  min-width: 0;
 }
 
 .user-name-link {

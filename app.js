@@ -8,6 +8,9 @@ let currentStatusFilter = 'all'; // 'all' | 'active' | 'inactive'
 let currentSearchQuery = '';
 let currentSort = 'latestTime_desc';
 
+// Default Fallback Avatar SVG (Clean lightweight inline SVG data URI)
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'><path d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/></svg>";
+
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
 const searchClearBtn = document.getElementById('searchClearBtn');
@@ -73,6 +76,17 @@ async function initApp() {
 
   // 4. Initial Render
   applyFiltersAndRender();
+}
+
+// ==========================================================================
+// User Icon Helper
+// Formula: https://usericon.nimg.jp/usericon/{Math.floor(userId / 10000)}/{userId}.jpg
+// ==========================================================================
+function getUserIconUrl(userId) {
+  const numId = parseInt(userId, 10);
+  if (isNaN(numId)) return DEFAULT_AVATAR;
+  const folder = Math.floor(numId / 10000);
+  return `https://usericon.nimg.jp/usericon/${folder}/${numId}.jpg`;
 }
 
 // ==========================================================================
@@ -338,16 +352,28 @@ function renderTable(data) {
       </div>
     `;
 
-    // User Info
+    // User Column (Avatar + Links)
     const tdUser = document.createElement('td');
     const userUrl = `https://www.nicovideo.jp/user/${encodeURIComponent(item.userId)}`;
+    const iconUrl = getUserIconUrl(item.userId);
+
     tdUser.innerHTML = `
       <div class="user-cell">
-        <a href="${userUrl}" target="_blank" rel="noopener noreferrer" class="user-name-link" title="ニコニコマイページを開く">
-          ${escapeHtml(item.userName)}
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-        </a>
-        <span class="user-id-sub">ID: ${escapeHtml(item.userId)}</span>
+        <img 
+          src="${iconUrl}" 
+          alt="${escapeHtml(item.userName)}" 
+          class="user-avatar" 
+          loading="lazy" 
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null; this.src='${DEFAULT_AVATAR}';"
+        >
+        <div class="user-info-text">
+          <a href="${userUrl}" target="_blank" rel="noopener noreferrer" class="user-name-link" title="ニコニコマイページを開く">
+            ${escapeHtml(item.userName)}
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+          <span class="user-id-sub">ID: ${escapeHtml(item.userId)}</span>
+        </div>
       </div>
     `;
 
