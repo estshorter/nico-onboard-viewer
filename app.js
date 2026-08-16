@@ -8,6 +8,7 @@ let availableYears = [];
 // 強制非表示（除外）対象のユーザーID（オプトアウト・非表示リクエスト対応）
 const HIDDEN_USER_IDS = new Set([
   280096, // 非表示リクエスト
+  53840440, // 非表示リクエスト
 ]);
 
 // Default initial state: 2026 Debut + Active only
