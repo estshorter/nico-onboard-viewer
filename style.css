@@ -794,7 +794,7 @@ body {
 .app-footer {
   border-top: 1px solid var(--border-subtle);
   padding-top: 1.5rem;
-  text-align: center;
+  text-align: left;
   font-size: 0.8rem;
   color: var(--text-muted);
 }
@@ -802,7 +802,8 @@ body {
 .footer-content {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.45rem;
+  line-height: 1.6;
 }
 
 .footer-content code {
