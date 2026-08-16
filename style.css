@@ -141,6 +141,14 @@ body {
   max-width: 860px;
 }
 
+.snapshot-note {
+  display: inline-block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-left: 0.25rem;
+}
+
 /* ==========================================================================
    Control Panel (Search & Filter)
    ========================================================================== */
