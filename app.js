@@ -11,8 +11,9 @@ let currentStatusFilter = 'active';
 let currentSearchQuery = '';
 let currentSort = 'latestTime_desc';
 
-// Default Fallback Avatar SVG in Base64 (No single-quote collision in inline onerror)
-const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzk0YTNiOCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==";
+// Default Official Niconico Fallback Avatar
+const DEFAULT_AVATAR = "https://secure-dcdn.cdn.nimg.jp/nicoaccount/usericon/defaults/blank.jpg";
+const FALLBACK_SVG = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzk0YTNiOCI+PHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPjwvc3ZnPg==";
 
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
@@ -348,7 +349,7 @@ function renderTable(data) {
           class="user-avatar" 
           loading="lazy" 
           referrerpolicy="no-referrer"
-          onerror="this.onerror=null; this.src='${DEFAULT_AVATAR}';"
+          onerror="this.onerror=function(){this.onerror=null;this.src='${FALLBACK_SVG}';}; this.src='${DEFAULT_AVATAR}';"
         >
         <div class="user-info-text">
           <a href="${userUrl}" target="_blank" rel="noopener noreferrer" class="user-name-link" title="ニコニコマイページを開く">
