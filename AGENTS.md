@@ -7,6 +7,8 @@
 ## 1. プロジェクト概要
 
 - **目的**: ニコニコ動画「ボイロ車載動画」ジャンルにおける歴代初投稿者の初投稿・最新投稿動画および活動状況を閲覧・検索できる静的Webデータベース。
+- **抽出対象タグ (OR条件)**:
+  `VOICEROID車載`, `VOICEPEAK車載`, `CeVIO車載`, `ソフトウェアトーク車載`, `A.I.VOICE車載`, `VOICEVOX車載`, `ガイノイドTalk車載`, `Coefont車載`, `結月ゆかり車載`, `弦巻マキ車載`
 - **公開先**: GitHub Pages ([https://estshorter.github.io/nico-onboard-viewer/](https://estshorter.github.io/nico-onboard-viewer/))
 - **技術スタック**:
   - フロントエンド: HTML5, Vanilla CSS, Vanilla JavaScript (フレームワークなし)

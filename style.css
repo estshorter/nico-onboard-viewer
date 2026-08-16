@@ -149,6 +149,80 @@ body {
   margin-left: 0.25rem;
 }
 
+/* Header Criteria Details */
+.header-criteria-details {
+  margin-top: 0.25rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.85rem;
+  font-size: 0.85rem;
+  max-width: 860px;
+  transition: var(--transition-fast);
+}
+
+.header-criteria-details[open] {
+  padding: 0.75rem 1rem;
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+.criteria-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.criteria-summary::-webkit-details-marker {
+  display: none;
+}
+
+.criteria-summary:hover {
+  color: var(--accent-primary);
+}
+
+.criteria-summary svg {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.criteria-body {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.criteria-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.criteria-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.criteria-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent-primary);
+  background-color: var(--accent-light);
+  border: 1px solid var(--border-subtle);
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
 /* ==========================================================================
    Control Panel (Search & Filter)
    ========================================================================== */
