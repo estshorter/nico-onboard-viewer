@@ -19,7 +19,7 @@ ax.add_patch(patches.Rectangle((0, 0), 1, 1, transform=ax.transAxes, color='#0f1
 ax.add_patch(patches.Rectangle((0.10, 0.32), 0.008, 0.36, transform=ax.transAxes, color='#38bdf8'))
 
 # Main Title (Left-aligned, Modern & Clean typography)
-ax.text(0.13, 0.50, 'ニコニコ ボイロ車載動画\n初投稿年別＆活動状況データベース', color='#ffffff', fontsize=38, fontweight='bold',
+ax.text(0.13, 0.50, 'ニコニコ ボイロ（広義）車載動画\n初投稿年別＆活動状況データベース', color='#ffffff', fontsize=36, fontweight='bold',
         ha='left', va='center', linespacing=1.35, transform=ax.transAxes)
 
 output_path = r"C:\Users\estshorter\src\nico-onboard-viewer\ogp.png"
