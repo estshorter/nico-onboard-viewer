@@ -1,5 +1,5 @@
 /**
- * Nico Onboard Active Users Viewer Logic (Streamlined UI + 2026 Active Default)
+ * Nico Onboard Active Users Viewer Logic (Dynamic Year Activity Summary)
  */
 
 let allData = [];
@@ -23,30 +23,16 @@ const statusFilterControl = document.getElementById('statusFilterControl');
 const tableBody = document.getElementById('tableBody');
 const noResults = document.getElementById('noResults');
 const currentCountEl = document.getElementById('currentCount');
-const totalDataCountEl = document.getElementById('totalDataCount');
 const resetFilterBtn = document.getElementById('resetFilterBtn');
 const activeFilterTags = document.getElementById('activeFilterTags');
 
-// Stat Cards Elements
-const statTotalCount = document.getElementById('statTotalCount');
-const statTotalActive = document.getElementById('statTotalActive');
-const statTotalRate = document.getElementById('statTotalRate');
-
-const stat2026Count = document.getElementById('stat2026Count');
-const stat2026Active = document.getElementById('stat2026Active');
-const stat2026Rate = document.getElementById('stat2026Rate');
-
-const stat2025Count = document.getElementById('stat2025Count');
-const stat2025Active = document.getElementById('stat2025Active');
-const stat2025Rate = document.getElementById('stat2025Rate');
-
-const stat2024Count = document.getElementById('stat2024Count');
-const stat2024Active = document.getElementById('stat2024Active');
-const stat2024Rate = document.getElementById('stat2024Rate');
-
-const stat2021Count = document.getElementById('stat2021Count');
-const stat2021Active = document.getElementById('stat2021Active');
-const stat2021Rate = document.getElementById('stat2021Rate');
+// Summary Banner Elements
+const summaryTargetTitle = document.getElementById('summaryTargetTitle');
+const statYearTotal = document.getElementById('statYearTotal');
+const statYearActive = document.getElementById('statYearActive');
+const statYearInactive = document.getElementById('statYearInactive');
+const statYearRate = document.getElementById('statYearRate');
+const summaryProgressBar = document.getElementById('summaryProgressBar');
 
 // ==========================================================================
 // Initialization
@@ -79,13 +65,10 @@ async function initApp() {
   // 3. Build Dynamic Year Dropdown
   buildYearDropdown();
 
-  // 4. Setup Stats Overview
-  updateGlobalStats();
-
-  // 5. Event Listeners
+  // 4. Setup Event Listeners
   setupEventListeners();
 
-  // 6. Initial Render
+  // 5. Initial Render
   applyFiltersAndRender();
 }
 
@@ -93,12 +76,13 @@ async function initApp() {
 // Dynamic Year Dropdown
 // ==========================================================================
 function buildYearDropdown() {
-  let selectHtml = `<option value="all">すべての年度 (${allData.length}名)</option>`;
+  let selectHtml = `<option value="all">すべての年度 (全${allData.length}名)</option>`;
   
   availableYears.forEach(yr => {
     const totalInYear = allData.filter(d => d.debutYear === yr).length;
     const activeInYear = allData.filter(d => d.debutYear === yr && d.isActiveRecent1Year).length;
-    selectHtml += `<option value="${yr}">${yr}年 デビュー (計${totalInYear}名 / 活動中${activeInYear}名)</option>`;
+    const rate = totalInYear ? (activeInYear / totalInYear * 100).toFixed(0) : '0';
+    selectHtml += `<option value="${yr}">${yr}年 デビュー (計${totalInYear}名 / 活動中${activeInYear}名 [${rate}%])</option>`;
   });
 
   yearSelectDropdown.innerHTML = selectHtml;
@@ -117,48 +101,29 @@ function getUserIconUrl(userId) {
 }
 
 // ==========================================================================
-// Stats Calculation
+// Update Dynamic Year Activity Summary Banner
 // ==========================================================================
-function updateGlobalStats() {
-  const total = allData.length;
-  const totalActive = allData.filter(d => d.isActiveRecent1Year).length;
+function updateYearSummaryBanner() {
+  let targetData = allData;
+  let titleText = '全期間 (2007年〜2026年) の活動状況';
 
-  const getStats = (yr) => {
-    const subset = allData.filter(d => d.debutYear === yr);
-    const act = subset.filter(d => d.isActiveRecent1Year).length;
-    return {
-      count: subset.length,
-      active: act,
-      rate: subset.length ? (act / subset.length * 100).toFixed(1) : '0'
-    };
-  };
+  if (currentFilterYear !== 'all') {
+    targetData = allData.filter(d => d.debutYear === currentFilterYear);
+    titleText = `${currentFilterYear}年 デビュー投稿者の活動状況`;
+  }
 
-  const s2026 = getStats(2026);
-  const s2025 = getStats(2025);
-  const s2024 = getStats(2024);
-  const s2021 = getStats(2021);
+  const total = targetData.length;
+  const active = targetData.filter(d => d.isActiveRecent1Year).length;
+  const inactive = total - active;
+  const rate = total > 0 ? (active / total * 100).toFixed(1) : '0.0';
 
-  // Render stats
-  totalDataCountEl.textContent = total.toLocaleString();
-  statTotalCount.textContent = total.toLocaleString();
-  statTotalActive.textContent = `${totalActive}名`;
-  statTotalRate.textContent = `${total ? (totalActive / total * 100).toFixed(1) : 0}%`;
+  summaryTargetTitle.textContent = titleText;
+  statYearTotal.textContent = `${total.toLocaleString()}名`;
+  statYearActive.textContent = `${active.toLocaleString()}名`;
+  statYearInactive.textContent = `${inactive.toLocaleString()}名`;
+  statYearRate.textContent = `${rate}%`;
 
-  stat2026Count.textContent = s2026.count.toLocaleString();
-  stat2026Active.textContent = `${s2026.active}名`;
-  stat2026Rate.textContent = `${s2026.rate}%`;
-
-  stat2025Count.textContent = s2025.count.toLocaleString();
-  stat2025Active.textContent = `${s2025.active}名`;
-  stat2025Rate.textContent = `${s2025.rate}%`;
-
-  stat2024Count.textContent = s2024.count.toLocaleString();
-  stat2024Active.textContent = `${s2024.active}名`;
-  stat2024Rate.textContent = `${s2024.rate}%`;
-
-  stat2021Count.textContent = s2021.count.toLocaleString();
-  stat2021Active.textContent = `${s2021.active}名`;
-  stat2021Rate.textContent = `${s2021.rate}%`;
+  summaryProgressBar.style.width = `${rate}%`;
 }
 
 // ==========================================================================
@@ -199,20 +164,6 @@ function setupEventListeners() {
     const btn = e.target.closest('.segment-btn');
     if (!btn) return;
     setStatusFilter(btn.dataset.status);
-  });
-
-  // Stat Card Click to Filter
-  document.getElementById('statsGrid').addEventListener('click', (e) => {
-    const card = e.target.closest('.stat-card');
-    if (!card) return;
-    const year = card.dataset.filterYear;
-    if (year === 'all') {
-      currentFilterYear = 'all';
-    } else if (year) {
-      currentFilterYear = parseInt(year, 10);
-    }
-    yearSelectDropdown.value = String(currentFilterYear);
-    applyFiltersAndRender();
   });
 
   // Reset Button
@@ -256,20 +207,23 @@ function normalizeText(text) {
 // Filter, Sort & Render
 // ==========================================================================
 function applyFiltersAndRender() {
-  // 1. Year Filtering
+  // 1. Update Summary Banner for selected year
+  updateYearSummaryBanner();
+
+  // 2. Year Filtering
   let filtered = allData;
   if (currentFilterYear !== 'all') {
     filtered = filtered.filter(item => item.debutYear === currentFilterYear);
   }
 
-  // 2. Active Status Filtering
+  // 3. Active Status Filtering
   if (currentStatusFilter === 'active') {
     filtered = filtered.filter(item => item.isActiveRecent1Year === true);
   } else if (currentStatusFilter === 'inactive') {
     filtered = filtered.filter(item => item.isActiveRecent1Year === false);
   }
 
-  // 3. Incremental Search Query (AND Search across words)
+  // 4. Incremental Search Query (AND Search across words)
   if (currentSearchQuery) {
     const keywords = normalizeText(currentSearchQuery).split(/\s+/).filter(Boolean);
     
@@ -281,7 +235,7 @@ function applyFiltersAndRender() {
     });
   }
 
-  // 4. Sorting
+  // 5. Sorting
   filtered.sort((a, b) => {
     switch (currentSort) {
       case 'latestTime_desc':
@@ -299,11 +253,11 @@ function applyFiltersAndRender() {
     }
   });
 
-  // 5. Update UI Counts & Badges
-  currentCountEl.textContent = filtered.length.toLocaleString();
+  // 6. Update UI Counts & Badges
+  currentCountEl.textContent = `${filtered.length.toLocaleString()}名`;
   renderActiveFilterChips();
 
-  // 6. Render Table
+  // 7. Render Table
   renderTable(filtered);
 }
 

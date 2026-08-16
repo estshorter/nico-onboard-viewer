@@ -18,42 +18,13 @@
         <div class="header-badge">ニコニコ車載動画 分析アーカイブ</div>
         <h1 class="header-title">初投稿年別 車載主データベース ＆ 活動状況アーカイブ</h1>
         <p class="header-desc">
-          ニコニコ動画の車載動画ジャンルにおける全歴代初投稿者の総合データベースです。初投稿年別の絞り込みや、直近1年間（2025〜2026年）の活動状況によるリアルタイム検索が可能です。
+          ニコニコ動画の車載動画ジャンルにおける歴代全初投稿者（2,976名）の総合データベースです。初投稿年別の絞り込みや、直近1年間（2025〜2026年）の活動状況によるリアルタイム検索が可能です。
         </p>
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Dynamic Stats Grid -->
-      <section class="stats-grid" id="statsGrid">
-        <div class="stat-card total-card" data-filter-year="all">
-          <div class="stat-label">総登録投稿者数</div>
-          <div class="stat-value" id="statTotalCount">--</div>
-          <div class="stat-sub">活動中: <span id="statTotalActive">--</span> (<span id="statTotalRate">--%</span>)</div>
-        </div>
-        <div class="stat-card" data-filter-year="2026">
-          <div class="stat-label">2026年デビュー</div>
-          <div class="stat-value" id="stat2026Count">--</div>
-          <div class="stat-sub">活動中: <span id="stat2026Active">--</span> (<span id="stat2026Rate">--%</span>)</div>
-        </div>
-        <div class="stat-card" data-filter-year="2025">
-          <div class="stat-label">2025年デビュー</div>
-          <div class="stat-value" id="stat2025Count">--</div>
-          <div class="stat-sub">活動中: <span id="stat2025Active">--</span> (<span id="stat2025Rate">--%</span>)</div>
-        </div>
-        <div class="stat-card" data-filter-year="2024">
-          <div class="stat-label">2024年デビュー</div>
-          <div class="stat-value" id="stat2024Count">--</div>
-          <div class="stat-sub">活動中: <span id="stat2024Active">--</span> (<span id="stat2024Rate">--%</span>)</div>
-        </div>
-        <div class="stat-card" data-filter-year="2021">
-          <div class="stat-label">2021年デビュー</div>
-          <div class="stat-value" id="stat2021Count">--</div>
-          <div class="stat-sub">活動中: <span id="stat2021Active">--</span> (<span id="stat2021Rate">--%</span>)</div>
-        </div>
-      </section>
-
       <!-- Control Bar: Search, Year Dropdown, Active Status & Sort -->
       <section class="control-panel">
         <!-- Search Row -->
@@ -112,12 +83,41 @@
             </select>
           </div>
         </div>
+
+        <!-- Dynamic Year Activity Summary Banner -->
+        <div class="year-summary-banner" id="yearSummaryBanner">
+          <div class="summary-banner-header">
+            <span class="summary-target-title" id="summaryTargetTitle">2026年 デビューの活動状況</span>
+          </div>
+          <div class="summary-stats-grid">
+            <div class="summary-stat-item">
+              <span class="stat-item-label">総登録数</span>
+              <span class="stat-item-value" id="statYearTotal">--</span>
+            </div>
+            <div class="summary-stat-item active-stat">
+              <span class="stat-item-label">🌱 活動中</span>
+              <span class="stat-item-value" id="statYearActive">--</span>
+            </div>
+            <div class="summary-stat-item inactive-stat">
+              <span class="stat-item-label">💤 休止中</span>
+              <span class="stat-item-value" id="statYearInactive">--</span>
+            </div>
+            <div class="summary-stat-item rate-stat">
+              <span class="stat-item-label">活動継続率</span>
+              <span class="stat-item-value" id="statYearRate">--%</span>
+            </div>
+          </div>
+          <!-- Visual Rate Bar -->
+          <div class="summary-progress-wrapper" title="活動中 vs 休止中 の割合">
+            <div class="summary-progress-bar" id="summaryProgressBar" style="width: 0%;"></div>
+          </div>
+        </div>
       </section>
 
       <!-- Status Info & Results Count -->
       <section class="results-info-bar">
         <div class="results-count" id="resultsCount">
-          表示中: <strong id="currentCount">0</strong> 件 / 全 <span id="totalDataCount">0</span> 件
+          現在の絞り込み表示: <strong id="currentCount">0</strong> 件
         </div>
         <div class="active-filter-tags" id="activeFilterTags"></div>
       </section>
