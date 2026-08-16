@@ -319,8 +319,13 @@ function renderTable(data) {
     return 'y-vintage';
   };
 
-  data.forEach(item => {
+  data.forEach((item, index) => {
     const tr = document.createElement('tr');
+
+    // Row Number
+    const tdNum = document.createElement('td');
+    tdNum.className = 'td-num';
+    tdNum.textContent = String(index + 1);
 
     // Year & Status Column
     const tdYear = document.createElement('td');
@@ -419,6 +424,7 @@ function renderTable(data) {
       tdLatest.innerHTML = `<span class="no-latest-video">初投稿のみ記録</span>`;
     }
 
+    tr.appendChild(tdNum);
     tr.appendChild(tdYear);
     tr.appendChild(tdUser);
     tr.appendChild(tdFirst);

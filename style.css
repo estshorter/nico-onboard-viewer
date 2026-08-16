@@ -482,7 +482,9 @@ body {
 }
 
 /* Column Specific Styles */
-.th-year { width: 140px; min-width: 130px; }
+.th-num { width: 52px; min-width: 48px; text-align: center; color: var(--text-muted); }
+.td-num { text-align: center; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500; color: var(--text-muted); padding-top: 1.15rem; }
+.th-year { width: 135px; min-width: 125px; }
 .th-user { width: 330px; min-width: 300px; }
 .th-first-video { min-width: 320px; }
 .th-latest-video { min-width: 320px; }
