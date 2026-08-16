@@ -53,6 +53,10 @@
   --badge-2016-text: #86198f;
   --badge-2016-border: #f5d0fe;
 
+  --badge-vintage-bg: #f3f4f6;
+  --badge-vintage-text: #374151;
+  --badge-vintage-border: #e5e7eb;
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
@@ -340,10 +344,34 @@ body {
   min-width: 130px;
 }
 
+.filter-tabs-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .filter-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.year-select-dropdown {
+  padding: 0.42rem 0.85rem;
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.year-select-dropdown:focus {
+  border-color: var(--accent-primary);
 }
 
 .filter-tab {
@@ -575,6 +603,12 @@ body {
   background: var(--badge-2016-bg);
   color: var(--badge-2016-text);
   border-color: var(--badge-2016-border);
+}
+
+.year-badge.y-vintage {
+  background: var(--badge-vintage-bg);
+  color: var(--badge-vintage-text);
+  border-color: var(--badge-vintage-border);
 }
 
 /* Status Badge */

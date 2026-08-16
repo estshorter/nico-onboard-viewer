@@ -1,9 +1,10 @@
 /**
- * Nico Onboard Active Users Viewer Logic
+ * Nico Onboard Active Users Viewer Logic (Full Archive Support)
  */
 
 let allData = [];
-let currentFilterYear = 'all'; // 'all' | 2025 | 2023 | 2021 | 2016
+let availableYears = [];
+let currentFilterYear = 'all'; // 'all' | number (e.g. 2025, 2023, 2016, etc.)
 let currentStatusFilter = 'all'; // 'all' | 'active' | 'inactive'
 let currentSearchQuery = '';
 let currentSort = 'latestTime_desc';
@@ -16,6 +17,7 @@ const searchInput = document.getElementById('searchInput');
 const searchClearBtn = document.getElementById('searchClearBtn');
 const sortSelect = document.getElementById('sortSelect');
 const yearFilterTabs = document.getElementById('yearFilterTabs');
+const yearSelectDropdown = document.getElementById('yearSelectDropdown');
 const statusFilterControl = document.getElementById('statusFilterControl');
 const tableBody = document.getElementById('tableBody');
 const noResults = document.getElementById('noResults');
@@ -24,7 +26,7 @@ const totalDataCountEl = document.getElementById('totalDataCount');
 const resetFilterBtn = document.getElementById('resetFilterBtn');
 const activeFilterTags = document.getElementById('activeFilterTags');
 
-// Stat Cards
+// Stat Cards Elements
 const statTotalCount = document.getElementById('statTotalCount');
 const statTotalActive = document.getElementById('statTotalActive');
 const statTotalRate = document.getElementById('statTotalRate');
@@ -45,13 +47,6 @@ const stat2016Count = document.getElementById('stat2016Count');
 const stat2016Active = document.getElementById('stat2016Active');
 const stat2016Rate = document.getElementById('stat2016Rate');
 
-// Badges
-const badgeAll = document.getElementById('badgeAll');
-const badge2025 = document.getElementById('badge2025');
-const badge2023 = document.getElementById('badge2023');
-const badge2021 = document.getElementById('badge2021');
-const badge2016 = document.getElementById('badge2016');
-
 // ==========================================================================
 // Initialization
 // ==========================================================================
@@ -68,14 +63,59 @@ async function initApp() {
     }
   }
 
-  // 2. Setup Stats & Badges
+  // 2. Extract Available Years (sorted descending)
+  const yearSet = new Set();
+  allData.forEach(d => {
+    if (d.debutYear) yearSet.add(d.debutYear);
+  });
+  availableYears = Array.from(yearSet).sort((a, b) => b - a);
+
+  // 3. Build Dynamic Year Controls (Tabs & Dropdown)
+  buildYearControls();
+
+  // 4. Setup Stats Overview
   updateGlobalStats();
 
-  // 3. Event Listeners
+  // 5. Event Listeners
   setupEventListeners();
 
-  // 4. Initial Render
+  // 6. Initial Render
   applyFiltersAndRender();
+}
+
+// ==========================================================================
+// Dynamic Year Controls (Quick Tabs + Full Dropdown)
+// ==========================================================================
+function buildYearControls() {
+  // Primary Quick Tabs (All, and top recent milestone years)
+  const quickYears = [2025, 2024, 2023, 2022, 2021, 2016];
+  
+  let tabsHtml = `
+    <button class="filter-tab active" data-year="all" id="tabYearAll">
+      すべて <span class="badge" id="badgeAll">${allData.length}</span>
+    </button>
+  `;
+
+  quickYears.forEach(yr => {
+    if (availableYears.includes(yr)) {
+      const count = allData.filter(d => d.debutYear === yr).length;
+      tabsHtml += `
+        <button class="filter-tab" data-year="${yr}" id="tabYear${yr}">
+          ${yr}年 <span class="badge">${count}</span>
+        </button>
+      `;
+    }
+  });
+
+  yearFilterTabs.innerHTML = tabsHtml;
+
+  // Dropdown options for all years
+  let selectHtml = `<option value="all">すべての年度 (${allData.length}名)</option>`;
+  availableYears.forEach(yr => {
+    const count = allData.filter(d => d.debutYear === yr).length;
+    selectHtml += `<option value="${yr}">${yr}年 デビュー (${count}名)</option>`;
+  });
+  yearSelectDropdown.innerHTML = selectHtml;
 }
 
 // ==========================================================================
@@ -96,17 +136,20 @@ function updateGlobalStats() {
   const total = allData.length;
   const totalActive = allData.filter(d => d.isActiveRecent1Year).length;
 
-  const data2025 = allData.filter(d => d.debutYear === 2025);
-  const active2025 = data2025.filter(d => d.isActiveRecent1Year).length;
+  const getStats = (yr) => {
+    const subset = allData.filter(d => d.debutYear === yr);
+    const act = subset.filter(d => d.isActiveRecent1Year).length;
+    return {
+      count: subset.length,
+      active: act,
+      rate: subset.length ? (act / subset.length * 100).toFixed(1) : '0'
+    };
+  };
 
-  const data2023 = allData.filter(d => d.debutYear === 2023);
-  const active2023 = data2023.filter(d => d.isActiveRecent1Year).length;
-
-  const data2021 = allData.filter(d => d.debutYear === 2021);
-  const active2021 = data2021.filter(d => d.isActiveRecent1Year).length;
-
-  const data2016 = allData.filter(d => d.debutYear === 2016);
-  const active2016 = data2016.filter(d => d.isActiveRecent1Year).length;
+  const s2025 = getStats(2025);
+  const s2023 = getStats(2023);
+  const s2021 = getStats(2021);
+  const s2016 = getStats(2016);
 
   // Render stats
   totalDataCountEl.textContent = total.toLocaleString();
@@ -114,28 +157,21 @@ function updateGlobalStats() {
   statTotalActive.textContent = `${totalActive}名`;
   statTotalRate.textContent = `${total ? (totalActive / total * 100).toFixed(1) : 0}%`;
 
-  stat2025Count.textContent = data2025.length.toLocaleString();
-  stat2025Active.textContent = `${active2025}名`;
-  stat2025Rate.textContent = `${data2025.length ? (active2025 / data2025.length * 100).toFixed(1) : 0}%`;
+  stat2025Count.textContent = s2025.count.toLocaleString();
+  stat2025Active.textContent = `${s2025.active}名`;
+  stat2025Rate.textContent = `${s2025.rate}%`;
 
-  stat2023Count.textContent = data2023.length.toLocaleString();
-  stat2023Active.textContent = `${active2023}名`;
-  stat2023Rate.textContent = `${data2023.length ? (active2023 / data2023.length * 100).toFixed(1) : 0}%`;
+  stat2023Count.textContent = s2023.count.toLocaleString();
+  stat2023Active.textContent = `${s2023.active}名`;
+  stat2023Rate.textContent = `${s2023.rate}%`;
 
-  stat2021Count.textContent = data2021.length.toLocaleString();
-  stat2021Active.textContent = `${active2021}名`;
-  stat2021Rate.textContent = `${data2021.length ? (active2021 / data2021.length * 100).toFixed(1) : 0}%`;
+  stat2021Count.textContent = s2021.count.toLocaleString();
+  stat2021Active.textContent = `${s2021.active}名`;
+  stat2021Rate.textContent = `${s2021.rate}%`;
 
-  stat2016Count.textContent = data2016.length.toLocaleString();
-  stat2016Active.textContent = `${active2016}名`;
-  stat2016Rate.textContent = `${data2016.length ? (active2016 / data2016.length * 100).toFixed(1) : 0}%`;
-
-  // Badges on tabs
-  badgeAll.textContent = total;
-  badge2025.textContent = data2025.length;
-  badge2023.textContent = data2023.length;
-  badge2021.textContent = data2021.length;
-  badge2016.textContent = data2016.length;
+  stat2016Count.textContent = s2016.count.toLocaleString();
+  stat2016Active.textContent = `${s2016.active}名`;
+  stat2016Rate.textContent = `${s2016.rate}%`;
 }
 
 // ==========================================================================
@@ -172,6 +208,12 @@ function setupEventListeners() {
     setYearFilter(year === 'all' ? 'all' : parseInt(year, 10));
   });
 
+  // Year Dropdown Select
+  yearSelectDropdown.addEventListener('change', (e) => {
+    const val = e.target.value;
+    setYearFilter(val === 'all' ? 'all' : parseInt(val, 10));
+  });
+
   // Active Status Segment Control
   statusFilterControl.addEventListener('click', (e) => {
     const btn = e.target.closest('.segment-btn');
@@ -205,7 +247,10 @@ function setupEventListeners() {
 function setYearFilter(year) {
   currentFilterYear = year;
 
-  // Update tab active state
+  // Sync Dropdown
+  yearSelectDropdown.value = String(year);
+
+  // Sync Tabs
   document.querySelectorAll('.filter-tab').forEach(tab => {
     const tabYear = tab.dataset.year;
     if (tabYear === String(year)) {
@@ -336,6 +381,15 @@ function renderTable(data) {
 
   const fragment = document.createDocumentFragment();
 
+  // Color generator class for badges
+  const getBadgeClass = (yr) => {
+    if (yr >= 2024) return 'y-2025';
+    if (yr >= 2022) return 'y-2023';
+    if (yr >= 2020) return 'y-2021';
+    if (yr >= 2015) return 'y-2016';
+    return 'y-vintage';
+  };
+
   data.forEach(item => {
     const tr = document.createElement('tr');
 
@@ -347,7 +401,7 @@ function renderTable(data) {
     
     tdYear.innerHTML = `
       <div class="year-status-cell">
-        <span class="year-badge y-${item.debutYear}">${item.debutYear}年</span>
+        <span class="year-badge ${getBadgeClass(item.debutYear)}">${item.debutYear}年</span>
         ${statusPill}
       </div>
     `;

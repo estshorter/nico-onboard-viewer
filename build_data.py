@@ -1,77 +1,31 @@
 import os
-import pandas as pd
 import json
+import shutil
+import pandas as pd
 
-SOURCE_DIR = r"C:\Users\estshorter\src\nico-analyzer\results"
+SOURCE_JSON = r"C:\Users\estshorter\src\nico-analyzer\results\first_onboard_all.json"
 OUTPUT_DIR = r"C:\Users\estshorter\src\nico-onboard-viewer"
 
 def main():
-    records = []
-    
-    # 2016 active user IDs for reference
-    active_2016_file = os.path.join(SOURCE_DIR, "first_onboard_2016_active_recent_1year.csv")
-    active_2016_ids = set()
-    if os.path.exists(active_2016_file):
-        df_2016_act = pd.read_csv(active_2016_file)
-        active_2016_ids = set(df_2016_act["userId"].astype(str).tolist())
-    
-    # Target files (full files with all debut users)
-    target_files = [
-        ("2016", os.path.join(SOURCE_DIR, "first_onboard_2016.csv")),
-        ("2021", os.path.join(SOURCE_DIR, "first_onboard_2021.csv")),
-        ("2023", os.path.join(SOURCE_DIR, "first_onboard_2023.csv")),
-        ("2025", os.path.join(SOURCE_DIR, "first_onboard_2025.csv")),
-    ]
-    
-    for year, filepath in target_files:
-        if not os.path.exists(filepath):
-            print(f"Warning: {filepath} not found.")
-            continue
-            
-        df = pd.read_csv(filepath)
-        print(f"Loaded {year}: {len(df)} records from {os.path.basename(filepath)}")
+    if not os.path.exists(SOURCE_JSON):
+        print(f"Error: {SOURCE_JSON} not found.")
+        return
         
-        for _, row in df.iterrows():
-            user_id = str(row["userId"])
-            first_title = row.get("firstTitle") if "firstTitle" in row and pd.notna(row.get("firstTitle")) else row.get("title", "")
-            first_id = row.get("firstContentId") if "firstContentId" in row and pd.notna(row.get("firstContentId")) else row.get("contentId", "")
-            latest_time = str(row.get("latestPostTime", "")) if pd.notna(row.get("latestPostTime")) else ""
-            latest_title = str(row.get("latestTitle", "")) if pd.notna(row.get("latestTitle")) else ""
-            latest_id = str(row.get("latestContentId", "")) if pd.notna(row.get("latestContentId")) else ""
-            
-            # Determine isActiveRecent1Year
-            if "isActiveRecent1Year" in row and pd.notna(row["isActiveRecent1Year"]):
-                is_active = bool(row["isActiveRecent1Year"] is True or str(row["isActiveRecent1Year"]).lower() == "true")
-            elif year == "2016":
-                is_active = user_id in active_2016_ids
-            else:
-                is_active = False
-
-            record = {
-                "userId": user_id,
-                "userName": str(row["userName"]) if pd.notna(row["userName"]) else "名無し",
-                "debutYear": int(year),
-                "isActiveRecent1Year": is_active,
-                "firstPostTime": str(row["firstPostTime"]) if pd.notna(row["firstPostTime"]) else "",
-                "firstTitle": str(first_title),
-                "firstContentId": str(first_id),
-                "latestPostTime": latest_time,
-                "latestTitle": latest_title,
-                "latestContentId": latest_id,
-            }
-            records.append(record)
-            
+    print(f"Loading {SOURCE_JSON}...")
+    with open(SOURCE_JSON, "r", encoding="utf-8") as f:
+        records = json.load(f)
+        
     print(f"Total merged records: {len(records)}")
-    active_count = sum(1 for r in records if r["isActiveRecent1Year"])
+    active_count = sum(1 for r in records if r.get("isActiveRecent1Year"))
     print(f"Active users (recent 1 year): {active_count} / {len(records)} ({active_count / len(records) * 100:.1f}%)")
     
-    # Save as JSON
+    # Save as data.json
     json_path = os.path.join(OUTPUT_DIR, "data.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(records, f, ensure_ascii=False, indent=2)
     print(f"Saved {json_path}")
     
-    # Also save as data.js
+    # Save as data.js for direct file:// browsing without CORS issues
     js_path = os.path.join(OUTPUT_DIR, "data.js")
     with open(js_path, "w", encoding="utf-8") as f:
         f.write("window.NICO_ONBOARD_DATA = ")

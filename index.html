@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ニコニコ車載動画 初投稿年別＆活動状況データベース</title>
-  <meta name="description" content="ニコニコ動画の車載動画ジャンルにおける初投稿年別（2016年、2021年、2023年、2025年）の全投稿者および直近1年間の活動状況（アクティブ判定）データベース。">
+  <meta name="description" content="ニコニコ動画の車載動画ジャンルにおける全初投稿者（2007年〜現在）および直近1年間の活動状況（アクティブ判定）データベース。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,14 +18,14 @@
         <div class="header-badge">ニコニコ車載動画 分析アーカイブ</div>
         <h1 class="header-title">初投稿年別 車載主データベース ＆ 活動状況アーカイブ</h1>
         <p class="header-desc">
-          指定年に車載動画ジャンルで初投稿した動画投稿者のデータベースです。初投稿・最新投稿動画の確認や、直近1年間（2025〜2026年）の活動状況（アクティブ判定）によるフィルタリングが可能です。
+          ニコニコ動画の車載動画ジャンルにおける全歴代初投稿者の総合データベースです。初投稿・最新投稿動画の確認や、初投稿年別の絞り込み、直近1年間（2025〜2026年）の活動状況によるリアルタイム検索が可能です。
         </p>
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Stats Overview -->
+      <!-- Dynamic Stats Grid -->
       <section class="stats-grid" id="statsGrid">
         <div class="stat-card total-card" data-filter-year="all">
           <div class="stat-label">総登録投稿者数</div>
@@ -87,25 +87,19 @@
 
         <!-- Filter Controls Row -->
         <div class="filters-container">
-          <!-- Year Filter Tabs -->
+          <!-- Year Filter Selection -->
           <div class="filter-group">
             <div class="filter-group-label">初投稿年:</div>
-            <div class="filter-tabs" id="yearFilterTabs" role="tablist">
-              <button class="filter-tab active" data-year="all" id="tabYearAll">
-                すべて <span class="badge" id="badgeAll">0</span>
-              </button>
-              <button class="filter-tab" data-year="2025" id="tabYear2025">
-                2025年 <span class="badge" id="badge2025">0</span>
-              </button>
-              <button class="filter-tab" data-year="2023" id="tabYear2023">
-                2023年 <span class="badge" id="badge2023">0</span>
-              </button>
-              <button class="filter-tab" data-year="2021" id="tabYear2021">
-                2021年 <span class="badge" id="badge2021">0</span>
-              </button>
-              <button class="filter-tab" data-year="2016" id="tabYear2016">
-                2016年 <span class="badge" id="badge2016">0</span>
-              </button>
+            <div class="filter-tabs-container">
+              <div class="filter-tabs" id="yearFilterTabs" role="tablist">
+                <!-- Dynamically populated year tabs -->
+              </div>
+              <div class="year-select-wrapper">
+                <select id="yearSelectDropdown" class="year-select-dropdown">
+                  <option value="all">すべての年度</option>
+                  <!-- Dynamically populated options -->
+                </select>
+              </div>
             </div>
           </div>
 
