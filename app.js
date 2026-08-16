@@ -1,11 +1,13 @@
 /**
- * Nico Onboard Active Users Viewer Logic (Full Archive Support)
+ * Nico Onboard Active Users Viewer Logic (Streamlined UI + 2026 Active Default)
  */
 
 let allData = [];
 let availableYears = [];
-let currentFilterYear = 'all'; // 'all' | number (e.g. 2025, 2023, 2016, etc.)
-let currentStatusFilter = 'all'; // 'all' | 'active' | 'inactive'
+
+// Default initial state: 2026 Debut + Active only
+let currentFilterYear = 2026; 
+let currentStatusFilter = 'active'; 
 let currentSearchQuery = '';
 let currentSort = 'latestTime_desc';
 
@@ -16,7 +18,6 @@ const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/20
 const searchInput = document.getElementById('searchInput');
 const searchClearBtn = document.getElementById('searchClearBtn');
 const sortSelect = document.getElementById('sortSelect');
-const yearFilterTabs = document.getElementById('yearFilterTabs');
 const yearSelectDropdown = document.getElementById('yearSelectDropdown');
 const statusFilterControl = document.getElementById('statusFilterControl');
 const tableBody = document.getElementById('tableBody');
@@ -31,21 +32,21 @@ const statTotalCount = document.getElementById('statTotalCount');
 const statTotalActive = document.getElementById('statTotalActive');
 const statTotalRate = document.getElementById('statTotalRate');
 
+const stat2026Count = document.getElementById('stat2026Count');
+const stat2026Active = document.getElementById('stat2026Active');
+const stat2026Rate = document.getElementById('stat2026Rate');
+
 const stat2025Count = document.getElementById('stat2025Count');
 const stat2025Active = document.getElementById('stat2025Active');
 const stat2025Rate = document.getElementById('stat2025Rate');
 
-const stat2023Count = document.getElementById('stat2023Count');
-const stat2023Active = document.getElementById('stat2023Active');
-const stat2023Rate = document.getElementById('stat2023Rate');
+const stat2024Count = document.getElementById('stat2024Count');
+const stat2024Active = document.getElementById('stat2024Active');
+const stat2024Rate = document.getElementById('stat2024Rate');
 
 const stat2021Count = document.getElementById('stat2021Count');
 const stat2021Active = document.getElementById('stat2021Active');
 const stat2021Rate = document.getElementById('stat2021Rate');
-
-const stat2016Count = document.getElementById('stat2016Count');
-const stat2016Active = document.getElementById('stat2016Active');
-const stat2016Rate = document.getElementById('stat2016Rate');
 
 // ==========================================================================
 // Initialization
@@ -70,8 +71,13 @@ async function initApp() {
   });
   availableYears = Array.from(yearSet).sort((a, b) => b - a);
 
-  // 3. Build Dynamic Year Controls (Tabs & Dropdown)
-  buildYearControls();
+  // If 2026 is not present in data, fallback to the latest year
+  if (!availableYears.includes(2026) && availableYears.length > 0) {
+    currentFilterYear = availableYears[0];
+  }
+
+  // 3. Build Dynamic Year Dropdown
+  buildYearDropdown();
 
   // 4. Setup Stats Overview
   updateGlobalStats();
@@ -84,38 +90,19 @@ async function initApp() {
 }
 
 // ==========================================================================
-// Dynamic Year Controls (Quick Tabs + Full Dropdown)
+// Dynamic Year Dropdown
 // ==========================================================================
-function buildYearControls() {
-  // Primary Quick Tabs (All, and top recent milestone years)
-  const quickYears = [2025, 2024, 2023, 2022, 2021, 2016];
-  
-  let tabsHtml = `
-    <button class="filter-tab active" data-year="all" id="tabYearAll">
-      すべて <span class="badge" id="badgeAll">${allData.length}</span>
-    </button>
-  `;
-
-  quickYears.forEach(yr => {
-    if (availableYears.includes(yr)) {
-      const count = allData.filter(d => d.debutYear === yr).length;
-      tabsHtml += `
-        <button class="filter-tab" data-year="${yr}" id="tabYear${yr}">
-          ${yr}年 <span class="badge">${count}</span>
-        </button>
-      `;
-    }
-  });
-
-  yearFilterTabs.innerHTML = tabsHtml;
-
-  // Dropdown options for all years
+function buildYearDropdown() {
   let selectHtml = `<option value="all">すべての年度 (${allData.length}名)</option>`;
+  
   availableYears.forEach(yr => {
-    const count = allData.filter(d => d.debutYear === yr).length;
-    selectHtml += `<option value="${yr}">${yr}年 デビュー (${count}名)</option>`;
+    const totalInYear = allData.filter(d => d.debutYear === yr).length;
+    const activeInYear = allData.filter(d => d.debutYear === yr && d.isActiveRecent1Year).length;
+    selectHtml += `<option value="${yr}">${yr}年 デビュー (計${totalInYear}名 / 活動中${activeInYear}名)</option>`;
   });
+
   yearSelectDropdown.innerHTML = selectHtml;
+  yearSelectDropdown.value = String(currentFilterYear);
 }
 
 // ==========================================================================
@@ -146,10 +133,10 @@ function updateGlobalStats() {
     };
   };
 
+  const s2026 = getStats(2026);
   const s2025 = getStats(2025);
-  const s2023 = getStats(2023);
+  const s2024 = getStats(2024);
   const s2021 = getStats(2021);
-  const s2016 = getStats(2016);
 
   // Render stats
   totalDataCountEl.textContent = total.toLocaleString();
@@ -157,21 +144,21 @@ function updateGlobalStats() {
   statTotalActive.textContent = `${totalActive}名`;
   statTotalRate.textContent = `${total ? (totalActive / total * 100).toFixed(1) : 0}%`;
 
+  stat2026Count.textContent = s2026.count.toLocaleString();
+  stat2026Active.textContent = `${s2026.active}名`;
+  stat2026Rate.textContent = `${s2026.rate}%`;
+
   stat2025Count.textContent = s2025.count.toLocaleString();
   stat2025Active.textContent = `${s2025.active}名`;
   stat2025Rate.textContent = `${s2025.rate}%`;
 
-  stat2023Count.textContent = s2023.count.toLocaleString();
-  stat2023Active.textContent = `${s2023.active}名`;
-  stat2023Rate.textContent = `${s2023.rate}%`;
+  stat2024Count.textContent = s2024.count.toLocaleString();
+  stat2024Active.textContent = `${s2024.active}名`;
+  stat2024Rate.textContent = `${s2024.rate}%`;
 
   stat2021Count.textContent = s2021.count.toLocaleString();
   stat2021Active.textContent = `${s2021.active}名`;
   stat2021Rate.textContent = `${s2021.rate}%`;
-
-  stat2016Count.textContent = s2016.count.toLocaleString();
-  stat2016Active.textContent = `${s2016.active}名`;
-  stat2016Rate.textContent = `${s2016.rate}%`;
 }
 
 // ==========================================================================
@@ -200,18 +187,11 @@ function setupEventListeners() {
     applyFiltersAndRender();
   });
 
-  // Year Filter Tabs
-  yearFilterTabs.addEventListener('click', (e) => {
-    const tab = e.target.closest('.filter-tab');
-    if (!tab) return;
-    const year = tab.dataset.year;
-    setYearFilter(year === 'all' ? 'all' : parseInt(year, 10));
-  });
-
   // Year Dropdown Select
   yearSelectDropdown.addEventListener('change', (e) => {
     const val = e.target.value;
-    setYearFilter(val === 'all' ? 'all' : parseInt(val, 10));
+    currentFilterYear = val === 'all' ? 'all' : parseInt(val, 10);
+    applyFiltersAndRender();
   });
 
   // Active Status Segment Control
@@ -227,10 +207,12 @@ function setupEventListeners() {
     if (!card) return;
     const year = card.dataset.filterYear;
     if (year === 'all') {
-      setYearFilter('all');
+      currentFilterYear = 'all';
     } else if (year) {
-      setYearFilter(parseInt(year, 10));
+      currentFilterYear = parseInt(year, 10);
     }
+    yearSelectDropdown.value = String(currentFilterYear);
+    applyFiltersAndRender();
   });
 
   // Reset Button
@@ -238,29 +220,12 @@ function setupEventListeners() {
     searchInput.value = '';
     currentSearchQuery = '';
     searchClearBtn.style.display = 'none';
+    currentFilterYear = 'all';
     currentStatusFilter = 'all';
+    yearSelectDropdown.value = 'all';
     updateStatusSegmentUI();
-    setYearFilter('all');
+    applyFiltersAndRender();
   });
-}
-
-function setYearFilter(year) {
-  currentFilterYear = year;
-
-  // Sync Dropdown
-  yearSelectDropdown.value = String(year);
-
-  // Sync Tabs
-  document.querySelectorAll('.filter-tab').forEach(tab => {
-    const tabYear = tab.dataset.year;
-    if (tabYear === String(year)) {
-      tab.classList.add('active');
-    } else {
-      tab.classList.remove('active');
-    }
-  });
-
-  applyFiltersAndRender();
 }
 
 function setStatusFilter(status) {
@@ -383,10 +348,10 @@ function renderTable(data) {
 
   // Color generator class for badges
   const getBadgeClass = (yr) => {
-    if (yr >= 2024) return 'y-2025';
-    if (yr >= 2022) return 'y-2023';
-    if (yr >= 2020) return 'y-2021';
-    if (yr >= 2015) return 'y-2016';
+    if (yr >= 2025) return 'y-2025';
+    if (yr >= 2023) return 'y-2023';
+    if (yr >= 2021) return 'y-2021';
+    if (yr >= 2016) return 'y-2016';
     return 'y-vintage';
   };
 
