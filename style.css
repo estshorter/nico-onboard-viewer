@@ -528,10 +528,10 @@ body {
 }
 
 /* Column Specific Styles */
-.th-year { width: 110px; }
-.th-user { width: 270px; }
-.th-first-video { width: 40%; }
-.th-latest-video { width: 40%; }
+.th-year { width: 140px; min-width: 130px; }
+.th-user { width: 330px; min-width: 300px; }
+.th-first-video { min-width: 320px; }
+.th-latest-video { min-width: 320px; }
 
 /* Year & Status Cell */
 .year-status-cell {
