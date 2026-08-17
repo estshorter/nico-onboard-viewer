@@ -11,6 +11,7 @@ const HIDDEN_USER_IDS = new Set([
   53840440, // 非表示リクエスト
   59665199, // 非表示リクエスト
   5017972, // 非表示リクエスト
+  10640801, // 非表示リクエスト
 ]);
 
 // Default initial state: 2026 Debut + Active only
