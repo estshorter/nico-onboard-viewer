@@ -94,3 +94,4 @@ uv run python -m http.server 8000
 - **データ不整合の防止**: `data.json` と `data.js` は常に `build_data.py` を通じて同時に更新する。
 - **XSS対策**: 外部文字列（投稿者名、動画タイトル等）をDOMに挿入する際は、必ず `escapeHtml()` を通すか `textContent` を使用する。
 - **アバター画像**: 公式アバターURL形式（`https://usericon.nimg.jp/usericon/{Math.floor(userId/10000)}/{userId}.jpg`）を使用し、エラー時は `DEFAULT_AVATAR` / `FALLBACK_SVG` にフォールバックする。
+- **ライセンスの分離**: プログラムコードはMITライセンス、API取得データ（`data.json`, `data.js`, CSV等）はドワンゴAPI利用規約に準拠（非営利限定・無断再頒布禁止）とし、明確に分離して管理する。

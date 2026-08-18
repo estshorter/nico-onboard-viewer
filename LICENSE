@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+### Data License Exception (データのライセンス適用除外)
+
+The data files included in this repository (such as `data.json`, `data.js`, and CSV files) contain metadata retrieved and compiled from the Niconico "Snapshot Search API v2" provided by DWANGO Co., Ltd.
+
+- These data files and video/user metadata are **NOT** licensed under the MIT License.
+- All intellectual property rights to the data belong to DWANGO Co., Ltd. and their respective content creators.
+- In accordance with the Niconico Snapshot Search API Terms of Service, any commercial use and unauthorized redistribution of the data are strictly prohibited.
