@@ -28,4 +28,4 @@ The data files included in this repository (such as `data.json`, `data.js`, and 
 
 - These data files and video/user metadata are **NOT** licensed under the MIT License.
 - All intellectual property rights to the data belong to DWANGO Co., Ltd. and their respective content creators.
-- In accordance with the Niconico Snapshot Search API Terms of Service, any commercial use and unauthorized redistribution of the data are strictly prohibited.
+- In accordance with the Niconico Snapshot Search API Terms of Service (https://site.nicovideo.jp/search-api-docs/snapshot), any commercial use and unauthorized redistribution of the data are strictly prohibited.
