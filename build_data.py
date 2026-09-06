@@ -7,13 +7,9 @@ SOURCE_JSON = r"C:\Users\estshorter\src\nico-analyzer\results\first_onboard_all.
 OUTPUT_DIR = r"C:\Users\estshorter\src\nico-onboard-viewer"
 EXCLUDED_USERS_FILE = os.path.join(OUTPUT_DIR, "excluded_users.json")
 
-# デフォルトの除外対象ユーザーIDセット（オプトアウト・非表示リクエスト対応）
-DEFAULT_EXCLUDED_USER_IDS = {280096}
-
-
 def load_excluded_user_ids() -> set[int]:
     """除外対象ユーザーIDのセットを取得する"""
-    excluded = set(DEFAULT_EXCLUDED_USER_IDS)
+    excluded = set()
     if os.path.exists(EXCLUDED_USERS_FILE):
         try:
             with open(EXCLUDED_USERS_FILE, "r", encoding="utf-8") as f:
