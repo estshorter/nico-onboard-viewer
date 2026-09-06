@@ -1962,9 +1962,9 @@
     "firstPostTime": "2019-04-06 00:00:00",
     "firstTitle": "【第一回自転車動画祭】結月ゆかりとFunらいど！【鳥取すごいライド】",
     "firstContentId": "sm34865592",
-    "latestPostTime": "2023-10-22 23:59:00",
-    "latestTitle": "【ニコニコ自転車動画祭2023秋】結月ゆかりとFunらいど！【淡路島ロングライド150】",
-    "latestContentId": "sm42927527",
+    "latestPostTime": "2024-10-21 22:51:03",
+    "latestTitle": "あかりさんぐるめらいど！【しまなみサイクリング】",
+    "latestContentId": "sm44239832",
     "isActiveRecent1Year": false
   },
   {
@@ -2174,10 +2174,10 @@
   {
     "userId": 409930,
     "userName": "市松【ペケペケ農園】",
-    "debutYear": 2023,
-    "firstPostTime": "2023-07-13 00:11:02",
-    "firstTitle": "2023年7月12日　農作業日誌P688　ミニクーパーに乗って伊豆へと走りに行っただけだった・・・",
-    "firstContentId": "sm42476105",
+    "debutYear": 2021,
+    "firstPostTime": "2021-11-28 06:34:03",
+    "firstTitle": "2021年11月26日　中部横断道開通ゆるキャン△スタンプラリー2021　全部攻略動画　VOICEVOX解説",
+    "firstContentId": "sm39681931",
     "latestPostTime": "2026-09-03 01:01:10",
     "latestTitle": "2026年9月2日　農作業日誌1837　誘惑に負けての大崩、そして、登呂へ",
     "latestContentId": "sm46754422",
@@ -3816,6 +3816,18 @@
     "isActiveRecent1Year": true
   },
   {
+    "userId": 752716,
+    "userName": "ひやむぎ",
+    "debutYear": 2020,
+    "firstPostTime": "2020-03-10 22:31:02",
+    "firstTitle": "【VOICEROID車載】紲星あかりで行く車載動画準備【1分弱車載前夜祭】",
+    "firstContentId": "sm36492564",
+    "latestPostTime": "2020-03-19 02:03:02",
+    "latestTitle": "【VOICEROID車載】腹八分目で駆け抜けるバイク旅 part.伊勢うどん【1分弱車載前夜祭】",
+    "latestContentId": "sm36534685",
+    "isActiveRecent1Year": false
+  },
+  {
     "userId": 753685,
     "userName": "numanuma",
     "debutYear": 2022,
@@ -4456,8 +4468,8 @@
     "userName": "紫.",
     "debutYear": 2017,
     "firstPostTime": "2017-03-17 04:00:00",
-    "firstTitle": "関東甲信越小さなバイク旅【2017】第0.5回秋葉原",
-    "firstContentId": "sm30838925",
+    "firstTitle": "関東甲信越小さなバイク旅【2017】第2回鷲宮神社",
+    "firstContentId": "sm30838874",
     "latestPostTime": "2026-07-18 15:22:34",
     "latestTitle": "【シンプル車載動画投稿祭2026】この素晴らしいCASTに祝福を！#××草加IC→新倉PA",
     "latestContentId": "sm46562145",
@@ -5979,9 +5991,9 @@
     "userId": 1430728,
     "userName": "アレクP",
     "debutYear": 2022,
-    "firstPostTime": "2022-05-30 00:31:03",
-    "firstTitle": "多摩サイゆるポタ部.ep8　おさんぽとラーメンの裏技",
-    "firstContentId": "sm40542665",
+    "firstPostTime": "2022-03-09 00:01:03",
+    "firstTitle": "多摩サイゆるポタ部.ep1 初回投稿の裏技",
+    "firstContentId": "sm40148892",
     "latestPostTime": "2024-10-02 19:57:04",
     "latestTitle": "【自転車登山祭】多摩サイゆるポタ部 日本最高クラス難度GFの裏技【北アルプス山麓グランフォンド】",
     "latestContentId": "sm44170130",
@@ -7131,9 +7143,9 @@
     "userId": 2093700,
     "userName": "Kamica",
     "debutYear": 2019,
-    "firstPostTime": "2019-02-15 00:05:01",
-    "firstTitle": "【紲星あかり車載】うらら旅日記#２『美味い寿司を腹いっぱい！』",
-    "firstContentId": "sm34633424",
+    "firstPostTime": "2019-02-11 09:52:01",
+    "firstTitle": "【VOICEROID旅行】#1 安比高原へスノボーに行ってきた！[紲星あかり]",
+    "firstContentId": "sm34612979",
     "latestPostTime": "2026-07-31 18:00:00",
     "latestTitle": "【清里・野辺山】1万円台でオールインクルーシヴ！八ヶ岳のリゾートホテルを満喫するドライブ｜グランドメルキュール八ヶ岳｜清泉寮｜山梨県立まきば公園｜【うらら旅日記#68】",
     "latestContentId": "sm46574090",
@@ -8088,6 +8100,18 @@
     "isActiveRecent1Year": false
   },
   {
+    "userId": 2943277,
+    "userName": "夜霧ミスト",
+    "debutYear": 2026,
+    "firstPostTime": "2026-03-20 21:21:04",
+    "firstTitle": "【手抜き車載祭】理不尽に対してキレるあかりちゃん",
+    "firstContentId": "sm46078551",
+    "latestPostTime": "2026-03-20 21:21:04",
+    "latestTitle": "【手抜き車載祭】理不尽に対してキレるあかりちゃん",
+    "latestContentId": "sm46078551",
+    "isActiveRecent1Year": true
+  },
+  {
     "userId": 2959369,
     "userName": "東雲pnd",
     "debutYear": 2020,
@@ -8166,9 +8190,9 @@
     "firstPostTime": "2018-10-26 23:40:02",
     "firstTitle": "しぐの旅 第8話「ときめきと煌めき」",
     "firstContentId": "sm34079867",
-    "latestPostTime": "2019-08-20 01:34:01",
-    "latestTitle": "しぐの旅 番外編「勇者になれなかった僕は、しぶしぶ生物兵器を食べた」",
-    "latestContentId": "sm35564595",
+    "latestPostTime": "2019-10-21 23:58:02",
+    "latestTitle": "しぐの旅 第18話「天まで届け、夏草の風」",
+    "latestContentId": "sm35845943",
     "isActiveRecent1Year": false
   },
   {
@@ -8342,10 +8366,10 @@
   {
     "userId": 3314929,
     "userName": "猫のマタタビ",
-    "debutYear": 2024,
-    "firstPostTime": "2024-01-07 23:46:03",
-    "firstTitle": "駄弁る Vol.1 【VOICEROID車載】",
-    "firstContentId": "sm43247023",
+    "debutYear": 2022,
+    "firstPostTime": "2022-10-10 15:51:02",
+    "firstTitle": "思い立ったが吉日！？滝旅 ｜ 龍双ヶ滝 【日帰り旅行祭】",
+    "firstContentId": "sm41209192",
     "latestPostTime": "2024-03-23 22:03:03",
     "latestTitle": "思い立ったが吉日！？滝旅 ｜ 金引の滝　【1分1秒弱車載祭】",
     "latestContentId": "sm43566325",
@@ -10026,9 +10050,9 @@
     "firstPostTime": "2021-07-13 22:12:03",
     "firstTitle": "~迷子な旅々~ 『飯豊山』",
     "firstContentId": "sm39026450",
-    "latestPostTime": "2021-11-27 21:49:03",
-    "latestTitle": "~迷子な旅々~ 『奥会津の奥を大冒険』",
-    "latestContentId": "sm39679442",
+    "latestPostTime": "2022-06-23 20:30:03",
+    "latestTitle": "~迷子な旅々~『野湯に向かって part.2』",
+    "latestContentId": "sm40662965",
     "isActiveRecent1Year": false
   },
   {
@@ -10155,9 +10179,9 @@
     "userId": 5713144,
     "userName": "くりむ",
     "debutYear": 2018,
-    "firstPostTime": "2018-07-17 21:00:00",
-    "firstTitle": "マキマキとあかりのキャンツーカイキャン編",
-    "firstContentId": "sm33542159",
+    "firstPostTime": "2018-05-18 20:02:32",
+    "firstTitle": "H29年11月秋月ツーリング",
+    "firstContentId": "sm33225769",
     "latestPostTime": "2018-11-04 20:33:02",
     "latestTitle": "音街ウナときりたんのコメ返し",
     "latestContentId": "sm34125242",
@@ -11076,6 +11100,18 @@
     "isActiveRecent1Year": false
   },
   {
+    "userId": 7243994,
+    "userName": "Okkey",
+    "debutYear": 2019,
+    "firstPostTime": "2019-08-18 16:38:07",
+    "firstTitle": "東北きりたんと行く【The Long Dark】ストーリー実況",
+    "firstContentId": "sm35557458",
+    "latestPostTime": "2019-12-11 14:15:02",
+    "latestTitle": "東北きりたんと行く【The Long Dark】ストーリー実況part3",
+    "latestContentId": "sm36069952",
+    "isActiveRecent1Year": false
+  },
+  {
     "userId": 7253181,
     "userName": "雪駄",
     "debutYear": 2020,
@@ -11382,10 +11418,10 @@
     "firstPostTime": "2024-08-19 20:19:05",
     "firstTitle": "虫を求めて牛深へ【シンプル車載動画投稿祭】",
     "firstContentId": "sm43993689",
-    "latestPostTime": "2025-07-22 00:41:04",
-    "latestTitle": "虫と戯れに龍ヶ岳へ【シンプル車載動画投稿祭2025遅刻】",
-    "latestContentId": "sm45212154",
-    "isActiveRecent1Year": false
+    "latestPostTime": "2026-07-21 00:01:28",
+    "latestTitle": "車を買いました【シンプル車載動画投稿祭2026】",
+    "latestContentId": "sm46572878",
+    "isActiveRecent1Year": true
   },
   {
     "userId": 7725149,
@@ -12412,8 +12448,8 @@
     "userName": "twilightprincess",
     "debutYear": 2018,
     "firstPostTime": "2018-06-06 19:00:00",
-    "firstTitle": "「ユカマキ車載」　弱音ハク。オフロードツーリング１　北海道",
-    "firstContentId": "sm33322911",
+    "firstTitle": "「ユカマキ車載」　弱音ハク。オフロードツーリング",
+    "firstContentId": "sm33322789",
     "latestPostTime": "2023-05-03 08:15:00",
     "latestTitle": "【SEROW２５０】進め！第89弱音分隊！～その38～",
     "latestContentId": "sm42167916",
@@ -16155,9 +16191,9 @@
     "userId": 16399107,
     "userName": "Scwimer＠ちゃぶ",
     "debutYear": 2023,
-    "firstPostTime": "2023-09-22 22:10:03",
-    "firstTitle": "オフ車が増えたので走りに行こう",
-    "firstContentId": "sm42795525",
+    "firstPostTime": "2023-09-15 20:19:03",
+    "firstTitle": "オフ会きっかけにオフロードを始めよう",
+    "firstContentId": "sm42764623",
     "latestPostTime": "2026-02-18 04:06:04",
     "latestTitle": "蹴り出して征け オフロードバイク日記 part2",
     "latestContentId": "sm45959997",
@@ -16866,9 +16902,9 @@
     "firstPostTime": "2021-11-08 08:11:00",
     "firstTitle": "【VOICEROID車載】電動キック！茜ちゃん　第0話「輪行でりんくう→泉南イオンへ　～紀州街道&amp;府道250号～」",
     "firstContentId": "sm39595165",
-    "latestPostTime": "2026-03-31 23:59:00",
-    "latestTitle": "カブで征く、阿蘇と桜と茜ちゃん",
-    "latestContentId": "sm46118359",
+    "latestPostTime": "2026-05-31 20:35:00",
+    "latestTitle": "北海道美馬牛→富良野　ぬい茜ちゃんとナイスビューを探そう",
+    "latestContentId": "sm46376753",
     "isActiveRecent1Year": true
   },
   {
@@ -18000,6 +18036,18 @@
     "isActiveRecent1Year": true
   },
   {
+    "userId": 20230398,
+    "userName": "爆祭道化師ーバクサーピエロー",
+    "debutYear": 2021,
+    "firstPostTime": "2021-06-11 00:07:02",
+    "firstTitle": "【茶番】水奈瀬コウ、現る！！！",
+    "firstContentId": "sm38867482",
+    "latestPostTime": "2021-06-11 00:07:02",
+    "latestTitle": "【茶番】水奈瀬コウ、現る！！！",
+    "latestContentId": "sm38867482",
+    "isActiveRecent1Year": false
+  },
+  {
     "userId": 20239617,
     "userName": "daison",
     "debutYear": 2025,
@@ -18378,9 +18426,9 @@
     "firstPostTime": "2024-01-20 22:18:02",
     "firstTitle": "仕事休んでNC750Xで日本一周に行ってくる 第0話(決意表明篇)",
     "firstContentId": "sm43294666",
-    "latestPostTime": "2025-12-14 17:47:04",
-    "latestTitle": "仕事休んでNC750Xで日本一周に行ってくる 第7話(静岡→山梨)",
-    "latestContentId": "sm45727138",
+    "latestPostTime": "2026-05-31 21:25:05",
+    "latestTitle": "仕事休んでNC750Xで日本一周に行ってくる 第9話(群馬→埼玉→栃木)",
+    "latestContentId": "sm46379915",
     "isActiveRecent1Year": true
   },
   {
@@ -20358,9 +20406,9 @@
     "firstPostTime": "2019-09-12 23:39:02",
     "firstTitle": "【ボイロ車載】ゆづきずライダーズ　part4　足柄峠～その3～",
     "firstContentId": "sm35672915",
-    "latestPostTime": "2019-09-12 23:39:02",
-    "latestTitle": "【ボイロ車載】ゆづきずライダーズ　part4　足柄峠～その3～",
-    "latestContentId": "sm35672915",
+    "latestPostTime": "2020-03-24 22:58:02",
+    "latestTitle": "【1分弱車載祭】東北ずん子スタンプラリー後編",
+    "latestContentId": "sm36565407",
     "isActiveRecent1Year": false
   },
   {
@@ -20721,6 +20769,18 @@
     "latestPostTime": "2023-02-13 18:00:00",
     "latestTitle": "【Cevio旅行 】すずきつづみのヒトリタビ  ～沖縄編③ 沖縄の歴史と自然～",
     "latestContentId": "sm41787557",
+    "isActiveRecent1Year": false
+  },
+  {
+    "userId": 27616973,
+    "userName": "THE  豚",
+    "debutYear": 2021,
+    "firstPostTime": "2021-01-26 15:52:02",
+    "firstTitle": "琴葉姉妹は引っ越したい3【VOICEROID実況】",
+    "firstContentId": "sm38177648",
+    "latestPostTime": "2021-01-26 15:52:02",
+    "latestTitle": "琴葉姉妹は引っ越したい3【VOICEROID実況】",
+    "latestContentId": "sm38177648",
     "isActiveRecent1Year": false
   },
   {
@@ -21690,9 +21750,9 @@
     "firstPostTime": "2021-05-18 11:27:02",
     "firstTitle": "あかりちゃんのいきあたびばったび～新潟編①～",
     "firstContentId": "sm38754090",
-    "latestPostTime": "2021-06-15 21:14:02",
-    "latestTitle": "あかりちゃんのいきあたびばったび～新潟編⑤～",
-    "latestContentId": "sm38890879",
+    "latestPostTime": "2021-06-22 16:07:02",
+    "latestTitle": "あかりちゃんのいきあたびばったび～新潟編⑥～",
+    "latestContentId": "sm38923422",
     "isActiveRecent1Year": false
   },
   {
@@ -23514,9 +23574,9 @@
     "firstPostTime": "2019-12-09 22:35:02",
     "firstTitle": "辺境の地を追い求めて　「美しの塔」編",
     "firstContentId": "sm36064794",
-    "latestPostTime": "2026-08-11 09:00:00",
-    "latestTitle": "V-strom250で日本一周2nd　part39(函館→初山別)",
-    "latestContentId": "sm46650441",
+    "latestPostTime": "2026-08-28 09:00:00",
+    "latestTitle": "V-strom250で日本一周2nd　part42(礼文→利尻富士)",
+    "latestContentId": "sm46729640",
     "isActiveRecent1Year": true
   },
   {
@@ -23838,9 +23898,9 @@
     "firstPostTime": "2020-08-03 11:27:02",
     "firstTitle": "乗鞍畳平100％RTA　21時間57分",
     "firstContentId": "sm37292647",
-    "latestPostTime": "2020-08-03 11:27:02",
-    "latestTitle": "乗鞍畳平100％RTA　21時間57分",
-    "latestContentId": "sm37292647",
+    "latestPostTime": "2021-05-07 20:34:03",
+    "latestTitle": "本宮山RTA　　自転車VS担ぎVSバモス",
+    "latestContentId": "sm38701832",
     "isActiveRecent1Year": false
   },
   {
@@ -24126,9 +24186,9 @@
     "firstPostTime": "2017-12-29 22:42:39",
     "firstTitle": "きりたん　走りの旅倶楽部　第1回目「道の駅　種山ヶ原までぶらり」",
     "firstContentId": "sm32499726",
-    "latestPostTime": "2019-11-03 07:51:02",
-    "latestTitle": "きりたん　山吹色で駆ける道　第19回目「三沢クラシックカーミーティング」",
-    "latestContentId": "sm35901645",
+    "latestPostTime": "2020-01-17 20:16:02",
+    "latestTitle": "ずんきりと行く九州年末旅行　一話",
+    "latestContentId": "sm36239122",
     "isActiveRecent1Year": false
   },
   {
@@ -24807,9 +24867,9 @@
     "userId": 46942440,
     "userName": "だすちるい",
     "debutYear": 2023,
-    "firstPostTime": "2023-10-14 08:48:02",
-    "firstTitle": "【日帰り旅行祭2023】琴葉姉妹のぶっつけ日帰り旅行inハウステンボス",
-    "firstContentId": "sm42885129",
+    "firstPostTime": "2023-09-19 23:37:02",
+    "firstTitle": "琴葉姉妹のぶっつけ鹿児島旅行其ノ壱withエリミネーター400SE",
+    "firstContentId": "sm42784186",
     "latestPostTime": "2026-01-03 00:43:03",
     "latestTitle": "琴葉姉妹のぶっつけ??初心者ツーリング　withエリミネーター400SE【広島/福山・神石高原】",
     "latestContentId": "sm45797341",
@@ -25502,10 +25562,10 @@
   {
     "userId": 52184818,
     "userName": "fuji_nyan",
-    "debutYear": 2025,
-    "firstPostTime": "2025-02-10 20:09:04",
-    "firstTitle": "【シクロクロス車載】ずんだもんは山口まで出稼ぎに行くようです #15【山口CX 2024-25 きらら博記念公園】",
-    "firstContentId": "sm44634749",
+    "debutYear": 2023,
+    "firstPostTime": "2023-11-29 05:58:02",
+    "firstTitle": "ずんだもんがシクロクロスを語るようです #1【東北CX 2023-24 亘理】",
+    "firstContentId": "sm43081287",
     "latestPostTime": "2026-08-23 13:35:48",
     "latestTitle": "【自転車車載】ずんだもんはグラベルレースに挑戦するようです 【ハヤサカ グラベルクラシックやくらい 2026 presented by GRAVELKING】",
     "latestContentId": "sm46712073",
@@ -28130,10 +28190,10 @@
   {
     "userId": 79644297,
     "userName": "vngecjasz",
-    "debutYear": 2024,
-    "firstPostTime": "2024-09-15 05:16:00",
-    "firstTitle": "【VOICEROID】迫真レンタルカート部.sp1【F　淫　ホ　モ　杯】",
-    "firstContentId": "sm44103943",
+    "debutYear": 2021,
+    "firstPostTime": "2021-08-22 11:29:02",
+    "firstTitle": "【F1 2020】アゼルバイジャンをバーチャルツーリング【VOICEROID】",
+    "firstContentId": "sm39220768",
     "latestPostTime": "2025-07-08 00:00:00",
     "latestTitle": "【カート】SUPER WET TIME",
     "latestContentId": "sm45156795",
@@ -28974,9 +29034,9 @@
     "firstPostTime": "2021-09-24 21:44:03",
     "firstTitle": "【投稿予告兼】ニコニコ自転車動画祭2021秋のCM【ロードバイク】",
     "firstContentId": "sm39383450",
-    "latestPostTime": "2023-08-15 20:00:00",
-    "latestTitle": "【ヒルクライムRTA】第一回いばらきKOM in 八溝山 &quot;これが一番早いと思います&quot;",
-    "latestContentId": "sm42625958",
+    "latestPostTime": "2023-11-04 17:30:00",
+    "latestTitle": "【初心者向け】ガチ勢が解説 ロードバイク レースの種類解説【今年のレース振り返りを添えて】",
+    "latestContentId": "sm42979813",
     "isActiveRecent1Year": false
   },
   {
@@ -29118,9 +29178,9 @@
     "firstPostTime": "2022-08-24 22:06:02",
     "firstTitle": "襲い掛かる悲劇！　ヒルクライムゆるポタIN修羅",
     "firstContentId": "sm40975276",
-    "latestPostTime": "2022-10-05 19:54:02",
-    "latestTitle": "海水浴行きたい！　皆でゆるゆるサイクリングIN波津",
-    "latestContentId": "sm41179077",
+    "latestPostTime": "2023-08-10 19:27:02",
+    "latestTitle": "（ずんだもん）蟷螂の斧　草津ナイトレースC2",
+    "latestContentId": "sm42604361",
     "isActiveRecent1Year": false
   },
   {
@@ -29854,6 +29914,18 @@
     "latestTitle": "【終了】MT-01で北海道ツーリング2026",
     "latestContentId": "sm46734628",
     "isActiveRecent1Year": true
+  },
+  {
+    "userId": 93269732,
+    "userName": "失いP",
+    "debutYear": 2020,
+    "firstPostTime": "2020-12-21 23:45:02",
+    "firstTitle": "【失いP feat. 紲星あかり】終了【オリジナル曲】#紲星あかり誕生祭2020",
+    "firstContentId": "sm37997896",
+    "latestPostTime": "2020-12-21 23:45:02",
+    "latestTitle": "【失いP feat. 紲星あかり】終了【オリジナル曲】#紲星あかり誕生祭2020",
+    "latestContentId": "sm37997896",
+    "isActiveRecent1Year": false
   },
   {
     "userId": 93273670,
@@ -33336,6 +33408,18 @@
     "isActiveRecent1Year": false
   },
   {
+    "userId": 127313712,
+    "userName": "Meganesky",
+    "debutYear": 2023,
+    "firstPostTime": "2023-01-11 22:00:00",
+    "firstTitle": "【ロードバイク車載】#0 初めましてと初日の出",
+    "firstContentId": "sm41637427",
+    "latestPostTime": "2023-04-02 18:00:00",
+    "latestTitle": "【ゆるポタどこでしょう】#1 琵琶湖と団子と甘酒と",
+    "latestContentId": "sm42022783",
+    "isActiveRecent1Year": false
+  },
+  {
     "userId": 127388388,
     "userName": "ゆっくりステンレス",
     "debutYear": 2023,
@@ -35335,8 +35419,8 @@
     "firstTitle": "【告知動画】匿名アウトドア系動画投稿企画 「無名の旅人」",
     "firstContentId": "sm45731743",
     "latestPostTime": "2025-12-26 19:00:00",
-    "latestTitle": "【無名の旅人】ずんだもん「ずん子が変なところばっかり行ってるのだ…」",
-    "latestContentId": "sm45748224",
+    "latestTitle": "【無名の旅人】怪しいずんだもんに導かれてクイズ旅した話。",
+    "latestContentId": "sm45762238",
     "isActiveRecent1Year": true
   },
   {
