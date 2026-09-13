@@ -24,7 +24,7 @@
 | [`index.html`](file:///C:/Users/estshorter/src/nico-onboard-viewer/index.html) | メインUIマークアップ。レスポンシブテーブル・検索・フィルタUI |
 | [`style.css`](file:///C:/Users/estshorter/src/nico-onboard-viewer/style.css) | スタイリング（ダーク/ライト調和、バッジ、プログレスバー等） |
 | [`app.js`](file:///C:/Users/estshorter/src/nico-onboard-viewer/app.js) | クライアント側ロジック（フィルタ、検索、ソート、レンダリング、非表示フィルタ） |
-| [`build_data.py`](file:///C:/Users/estshorter/src/nico-onboard-viewer/build_data.py) | 元データから `data.json` / `data.js` / CSV を生成するスクリプト |
+| [`build_data.py`](file:///C:/Users/estshorter/src/nico-onboard-viewer/build_data.py) | 元データから `data.json` / `data.js` / CSV を生成し、`index.html` と `README.md` の基準日表記を自動更新するスクリプト |
 | [`excluded_users.json`](file:///C:/Users/estshorter/src/nico-onboard-viewer/excluded_users.json) | 強制非表示（オプトアウト希望）ユーザーIDの設定ファイル |
 | [`data.js`](file:///C:/Users/estshorter/src/nico-onboard-viewer/data.js) | `window.NICO_ONBOARD_DATA` を定義するスクリプト（`file://` 直開き時CORS対策） |
 | [`data.json`](file:///C:/Users/estshorter/src/nico-onboard-viewer/data.json) | Web配信用JSONデータ |
@@ -38,9 +38,15 @@
 
 Python環境には **`uv`** を使用してください。
 
-### データ再ビルド
+### データ再ビルド・更新日の更新
+`build_data.py` を実行すると、データファイル生成と同時に `index.html` および `README.md` の「データ集計基準日」や「直近1年間（〜）」の日付表記が、元データ内の最新動画投稿日（または指定日）に合わせて自動更新されます。
+
 ```bash
+# 自動判定（データ内の最新投稿日時を基準日とする）
 uv run --with pandas python build_data.py
+
+# 基準日を手動指定する場合 (例: 2026-09-13)
+uv run --with pandas python build_data.py --date 2026-09-13
 ```
 
 ### 簡易ローカルサーバー起動 (テスト用)
